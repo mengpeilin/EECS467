@@ -35,7 +35,7 @@ bool SensorModel::getDistanceAt(double world_x, double world_y, const ObstacleDi
     // TODO #1: Bilinear interpolation for distance
     // Hint: use grid.getDistance(x, y) to get distance at integer cell (x, y)
     //       e.g., grid.getDistance(x0, y0)
-    distance = 0
+    distance = 0;
     return true;
 }
 
