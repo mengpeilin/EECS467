@@ -44,7 +44,7 @@ geometry_msgs::msg::Pose ParticleFilter::update(const nav_msgs::msg::Odometry&  
     nav2_msgs::msg::ParticleCloud resampled_particles = systematicResample();
     nav2_msgs::msg::ParticleCloud prior = moved ? propagate(resampled_particles) : resampled_particles;
     particle_cloud_ = weightParticles(prior, scan, dist_grid);
-    pose_estimate_ = computeBestEstimate();
+    pose_estimate_ = computeBestEstimate(particle_cloud_);
 
     return pose_estimate_;
 }

@@ -64,7 +64,7 @@ private:
                                                   const sensor_msgs::msg::LaserScan& scan,
                                                   const ObstacleDistanceGrid&  grid) const;
 
-    geometry_msgs::msg::Pose computeBestEstimate() const;
+    geometry_msgs::msg::Pose computeBestEstimate(const nav2_msgs::msg::ParticleCloud& cloud) const;
 
     // Data members
     int                           num_particles_;   // number of particles
