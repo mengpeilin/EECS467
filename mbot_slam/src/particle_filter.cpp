@@ -103,7 +103,7 @@ nav2_msgs::msg::ParticleCloud ParticleFilter::weightParticles(const nav2_msgs::m
 }
 
 // Compute pose estimate
-geometry_msgs::msg::Pose ParticleFilter::computeBestEstimate() const
+geometry_msgs::msg::Pose ParticleFilter::computeBestEstimate(const nav2_msgs::msg::ParticleCloud& cloud) const
 {
     double x=0.0, y=0.0, cos_sum=0.0, sin_sum=0.0;
 
