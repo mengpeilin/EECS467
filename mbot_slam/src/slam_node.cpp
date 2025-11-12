@@ -80,8 +80,7 @@ private:
     nav_msgs::msg::Path odom_path_;
 
     bool has_initialized_{false};
-    geometry_msgs::msg::Pose previous_odom_pose_;  // Track previous odometry for ray interpolation
-    geometry_msgs::msg::Pose previous_est_pose_;   // Track previous estimate for ray interpolation
+    geometry_msgs::msg::Pose est_pose_end;
 
     // Scan callback
     void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr scan)
@@ -108,8 +107,7 @@ private:
                 particle_filter_->initializeAtPose(odom_msg.pose.pose);
                 particle_filter_->resetOdometry(odom_msg);
 
-                previous_odom_pose_ = odom_msg.pose.pose;
-                previous_est_pose_ = odom_msg.pose.pose;
+                est_pose_end = odom_msg.pose.pose;
 
                 // Initialize grid with initial scan
                 MovingLaserScan initial_scan(*scan, odom_msg.pose.pose, odom_msg.pose.pose);
@@ -126,14 +124,18 @@ private:
             const auto est_pose = particle_filter_->update(odom_msg, *scan, dist_grid_);
 
             // TODO #2: fill up the TODOs in moving_laser_scan.cpp
-            MovingLaserScan interpolated_scan(*scan, previous_est_pose_, est_pose);
+            MovingLaserScan interpolated_scan(*scan, est_pose, est_pose);               // works
+
+            // TODO #6: calcualte the est_pose_end, the est_pose at the end of the lidar scan
+            // Hints: use message's member time_increment to calcualte the time duration
+            //          then you can get where the odometry at when the lidar's last ray fires
+            //          odom_end time stamp = scan->header.stamp + lidar time duration
+            //          then you will get est_pose_end = odometry_end + position corretction
+            //          and the position correction is also what we broadcast map -> odom
+            // MovingLaserScan interpolated_scan(*scan, est_pose, est_pose_end);        // optimal
             updateGridWithScan(interpolated_scan);
 
             broadcastTf(est_pose, odom_msg.pose.pose, scan->header.stamp);
-
-            // Update previous poses for next scan
-            previous_odom_pose_ = odom_msg.pose.pose;
-            previous_est_pose_ = est_pose;
 
             publishPose(est_pose, scan->header.stamp);
             publishCloud(scan->header.stamp);
