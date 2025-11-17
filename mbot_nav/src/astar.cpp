@@ -1,0 +1,132 @@
+#include "astar.hpp"
+#include <cmath>
+#include <limits>
+#include <unordered_set>
+#include <rclcpp/rclcpp.hpp>
+#include <sstream>
+#include <iomanip>
+
+using namespace mbot_nav;
+
+AStarPlanner::AStarPlanner() {}
+
+float AStarPlanner::heuristic(int x1, int y1, int x2, int y2) {
+    return std::hypot(x2 - x1, y2 - y1);
+}
+
+bool AStarPlanner::planPath(const ObstacleDistanceGrid& dist_grid,
+                            const geometry_msgs::msg::Pose2D& start,
+                            const geometry_msgs::msg::Pose2D& goal,
+                            mbot_nav::msg::Pose2DArray& path) {
+    path.poses.clear();
+    mbot_nav::msg::Pose2DArray raw_path;
+    int width = dist_grid.getWidth();
+
+    int start_x = static_cast<int>((start.x - dist_grid.getOrigin().position.x) / dist_grid.getResolution());
+    int start_y = static_cast<int>((start.y - dist_grid.getOrigin().position.y) / dist_grid.getResolution());
+    int goal_x = static_cast<int>((goal.x - dist_grid.getOrigin().position.x) / dist_grid.getResolution());
+    int goal_y = static_cast<int>((goal.y - dist_grid.getOrigin().position.y) / dist_grid.getResolution());
+
+    std::priority_queue<AStarNode, std::vector<AStarNode>, std::greater<>> open; // stores nodes to be explored
+    std::unordered_map<int, float> cost_so_far; // g-cost
+    std::unordered_map<int, int> came_from;     // stores parent node
+
+    int start_idx = toIndex(start_x, start_y, width);
+    int goal_idx = toIndex(goal_x, goal_y, width);
+
+    open.push({start_x, start_y, 0.0f, heuristic(start_x, start_y, goal_x, goal_y)});
+    cost_so_far[start_idx] = 0.0f;
+    came_from[start_idx] = start_idx;
+
+    const int dx[8] = {1, -1, 0, 0,  1, 1, -1, -1};
+    const int dy[8] = {0, 0, 1, -1,  1, -1, 1, -1};
+
+    while (!open.empty()) {
+        AStarNode current = open.top();
+        open.pop();
+
+        int curr_idx = toIndex(current.x, current.y, width);
+        if (curr_idx == goal_idx) {
+            // Construct the path
+            auto path_indices = reconstructPath(came_from, goal_idx, width);
+            // Convert path to world 
+            for (size_t i = 0; i < path_indices.size(); ++i) {
+                const auto& [x, y] = path_indices[i];
+                geometry_msgs::msg::Pose2D pose;
+                pose.x = x * dist_grid.getResolution() + dist_grid.getOrigin().position.x;
+                pose.y = y * dist_grid.getResolution() + dist_grid.getOrigin().position.y;
+
+                // TODO #3: add pose.theta here
+                //       how would you decide the pose's heading?
+
+                raw_path.poses.push_back(pose);
+            }
+            path = smoothPath(dist_grid, raw_path); 
+            return true;
+        }
+
+        for (int i = 0; i < 8; ++i) {
+            int nx = current.x + dx[i];
+            int ny = current.y + dy[i];
+
+            if (!dist_grid.isCellInGrid(nx, ny)) continue;
+            int neighbor_idx = toIndex(nx, ny, width);
+            float obs_dist = dist_grid.getDistance(nx, ny);
+            int occupancy = dist_grid.getOccupancy(nx, ny);
+
+            // TODO #1: Add new AStarNode to open queue
+            // Hint: to construct AStarNode, you need x,y which is (nx,ny) here
+            //       also need g-cost and h-cost
+            //       utilize heuristic(), this is the h-cost
+            //       when calculate g-cost, also consider where are the places
+            //       we don't want the robot to go.
+        }
+    }
+
+    return false;  // Path not found
+}
+
+std::vector<std::pair<int, int>> AStarPlanner::reconstructPath(
+    const std::unordered_map<int, int>& came_from, int goal_idx, int width) {
+
+    std::vector<std::pair<int, int>> path;
+    // TODO #2: construct the raw path here
+
+    return path;
+}
+
+bool AStarPlanner::isLineFree(const ObstacleDistanceGrid& dist_grid, float x0, float y0, float x1, float y1)
+{
+    const float step = dist_grid.getResolution() * 0.5f;
+    const float dx = x1 - x0;
+    const float dy = y1 - y0;
+    const float dist = std::hypot(dx, dy);
+    const float angle = std::atan2(dy, dx);
+
+    for (float d = 0.0f; d <= dist; d += step) {
+        float x = x0 + std::cos(angle) * d;
+        float y = y0 + std::sin(angle) * d;
+        int ix = static_cast<int>((x - dist_grid.getOrigin().position.x) / dist_grid.getResolution());
+        int iy = static_cast<int>((y - dist_grid.getOrigin().position.y) / dist_grid.getResolution());
+        if (!dist_grid.isCellInGrid(ix, iy) || dist_grid.getDistance(ix, iy) < 0.2f) {
+            return false;
+        }
+    }
+    return true;
+}
+
+mbot_nav::msg::Pose2DArray AStarPlanner::smoothPath(
+    const ObstacleDistanceGrid& dist_grid, const mbot_nav::msg::Pose2DArray& raw_path)
+{
+    mbot_nav::msg::Pose2DArray pruned;
+    if (raw_path.poses.empty()) return pruned;
+
+    pruned.poses.push_back(raw_path.poses.front());
+
+    // TODO #4: Smooth the path here
+    // Hint: say if you have 100 waypoints and they are in tiny step, 
+    // maybe we can downsize them by removing midpoints
+    // utilize the function isLineFree()
+
+    return pruned;
+}
