@@ -45,7 +45,7 @@ private:
     // Data
     nav_msgs::msg::OccupancyGrid::SharedPtr latest_map_;
     std::optional<geometry_msgs::msg::Pose2D> current_goal_;
-    double goal_reached_threshold_ = 0.30;
+    double goal_reached_threshold_ = 0.15;
 
     // Planners
     mbot_nav::AStarPlanner astar_planner_;
