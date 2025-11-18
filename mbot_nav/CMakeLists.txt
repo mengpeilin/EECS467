@@ -83,8 +83,22 @@ target_link_libraries(exploration_node
   ${cpp_typesupport_target}
 )
 
+# Motion controller node
+add_executable(motion_controller_diff
+  src/motion_controller_diff.cpp
+)
+ament_target_dependencies(motion_controller_diff
+  rclcpp
+  nav_msgs
+  geometry_msgs
+)
+rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
+target_link_libraries(motion_controller_diff
+  ${cpp_typesupport_target}
+)
+
 # Install targets and resources
-install(TARGETS navigation_node astar_test exploration_node
+install(TARGETS navigation_node astar_test exploration_node motion_controller_diff
   DESTINATION lib/${PROJECT_NAME}
 )
 install(TARGETS obstacle_distance_grid
