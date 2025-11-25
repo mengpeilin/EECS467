@@ -9,9 +9,11 @@
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/pose2_d.hpp"
-#include "nav_msgs/msg/odometry.hpp"
 #include "mbot_nav/msg/pose2_d_array.hpp"
 #include <rclcpp/qos.hpp>
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -19,9 +21,10 @@ using namespace std::chrono_literals;
 class DiffMotionController : public rclcpp::Node {
 public:
     DiffMotionController() : Node("diff_motion_controller") {
-        rclcpp::QoS odom_qos = rclcpp::SensorDataQoS();
-        odom_subscriber_ = this->create_subscription<nav_msgs::msg::Odometry>(
-            "/odom", odom_qos, std::bind(&DiffMotionController::odom_callback, this, _1));
+        // TF setup
+        tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
+        tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
+
         goal_subscriber_ = this->create_subscription<mbot_nav::msg::Pose2DArray>(
             "/waypoints", 10, std::bind(&DiffMotionController::goal_callback, this, _1));
 
@@ -45,10 +48,12 @@ public:
     }
 
 private:
-    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_subscriber_;
     rclcpp::Subscription<mbot_nav::msg::Pose2DArray>::SharedPtr goal_subscriber_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_publisher_;
     rclcpp::TimerBase::SharedPtr timer_;
+
+    std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
+    std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 
     std::ofstream log_file_;
 
@@ -68,22 +73,11 @@ private:
     double ang_error_sum_ = 0.0;
     double ang_error_last_ = 0.0;
 
-    void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
-        current_x_ = msg->pose.pose.position.x;
-        current_y_ = msg->pose.pose.position.y;
-
-        double siny_cosp = 2 * (msg->pose.pose.orientation.w * msg->pose.pose.orientation.z +
-                                msg->pose.pose.orientation.x * msg->pose.pose.orientation.y);
-        double cosy_cosp = 1 - 2 * (msg->pose.pose.orientation.y * msg->pose.pose.orientation.y +
-                                    msg->pose.pose.orientation.z * msg->pose.pose.orientation.z);
-        current_theta_ = std::atan2(siny_cosp, cosy_cosp);
-    }
-
     void goal_callback(const mbot_nav::msg::Pose2DArray::SharedPtr msg) {
         // Clear old goals and fill queue with new ones
         goal_queue_.clear();
         for (const auto &pose : msg->poses) {
-            goal_queue_.push_back(pose);
+                goal_queue_.push_back(pose);
         }
         RCLCPP_INFO(this->get_logger(), "Received %zu goals", msg->poses.size());
 
@@ -101,6 +95,27 @@ private:
         
     void timer_callback() {
         if (!goal_received_) return;
+
+        // Get robot pose from TF (map -> base_footprint)
+        // Localization is REQUIRED for map-based navigation
+        try {
+            geometry_msgs::msg::TransformStamped transform =
+                tf_buffer_->lookupTransform("map", "base_footprint", rclcpp::Time(0));
+
+            current_x_ = transform.transform.translation.x;
+            current_y_ = transform.transform.translation.y;
+
+            // Extract yaw from quaternion
+            double siny_cosp = 2 * (transform.transform.rotation.w * transform.transform.rotation.z +
+                                    transform.transform.rotation.x * transform.transform.rotation.y);
+            double cosy_cosp = 1 - 2 * (transform.transform.rotation.y * transform.transform.rotation.y +
+                                        transform.transform.rotation.z * transform.transform.rotation.z);
+            current_theta_ = std::atan2(siny_cosp, cosy_cosp);
+        } catch (tf2::TransformException &ex) {
+            RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
+                "Localization required! Cannot get map->base_footprint transform: %s", ex.what());
+            return;
+        }
 
         static rclcpp::Time t0;
         if (t0.nanoseconds() == 0) t0 = this->now();

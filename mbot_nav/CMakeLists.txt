@@ -91,6 +91,8 @@ ament_target_dependencies(motion_controller_diff
   rclcpp
   nav_msgs
   geometry_msgs
+  tf2_ros
+  tf2_geometry_msgs
 )
 rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
 target_link_libraries(motion_controller_diff
