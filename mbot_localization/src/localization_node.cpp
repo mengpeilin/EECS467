@@ -27,6 +27,17 @@ public:
       tf_buffer_(std::make_shared<tf2_ros::Buffer>(this->get_clock())),
       tf_listener_(std::make_shared<tf2_ros::TransformListener>(*tf_buffer_))
     {
+        // Declare parameter for controlling tf publishing
+        // When using bag data, set to false to avoid tf conflicts
+        this->declare_parameter("publish_tf", true);
+        publish_tf_ = this->get_parameter("publish_tf").as_bool();
+
+        if (publish_tf_) {
+            RCLCPP_INFO(get_logger(), "TF publishing ENABLED. Set initial pose in RViz using '2D Pose Estimate' tool");
+        } else {
+            RCLCPP_INFO(get_logger(), "TF publishing DISABLED (bag playback mode)");
+        }
+
         // Particle filter
         particle_filter_ = std::make_unique<mbot_localization::ParticleFilter>();
 
@@ -85,14 +96,12 @@ private:
 
     bool have_map_{false};
     bool have_initial_pose_{false};
-    bool publish_map_odom_{false};
+    bool publish_tf_{true};
 
     // Map callback
     void mapCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg)
     {
         map_ = *msg;
-        // TODO #1: Obstacle distance grid - obstacle_distance_grid.cpp
-        // Compute distance grid from the received map
         dist_grid_.computeDistFromMap(map_);
         have_map_ = true;
 
@@ -134,7 +143,15 @@ private:
     void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr scan)
     {
         if (!have_map_) return;
-        if (!have_initial_pose_) return;
+
+        if (!have_initial_pose_) {
+            if (publish_tf_) {
+                RCLCPP_WARN_THROTTLE(
+                    get_logger(), *get_clock(), 3000,
+                    "Waiting for initial pose. Please set it in RViz using '2D Pose Estimate' tool");
+            }
+            return;
+        }
 
         // Lookup odometry transform
         nav_msgs::msg::Odometry odom_msg;
@@ -152,18 +169,15 @@ private:
             return;
         }
 
-        // TODO #2: Particle filter - check particle_filter.cpp TODOs
-        // This is where the main particle filter update happens
-        // Ultimately our goal is to get est_pose
+        // Particle-filter update with odometry at scan timestamp
         const auto est_pose = particle_filter_->update(odom_msg, *scan, dist_grid_);
 
-        // Publish outputs for visualization
         publishPose(est_pose, scan->header.stamp);
         publishCloud(scan->header.stamp);
         publishEstPath(est_pose, scan->header.stamp);
         publishOdomPath(odom_msg.pose.pose, scan->header.stamp);
 
-        if (publish_map_odom_) {
+        if (publish_tf_) {
             broadcastTf(est_pose, odom_msg.pose.pose, scan->header.stamp);
         }
     }
@@ -181,6 +195,7 @@ private:
         reference_path_pub_->publish(amcl_path_);
     }
 
+    // Helpers: publish pose/cloud
     void publishPose(const geometry_msgs::msg::Pose &pose, const rclcpp::Time &stamp) const
     {
         geometry_msgs::msg::PoseWithCovarianceStamped msg;
@@ -261,10 +276,10 @@ private:
         tf2::Transform tf_map_base;
         tf2::fromMsg(map_base, tf_map_base);
 
-        tf2::Transform tf_odom_lidar;
-        tf2::fromMsg(odom_base, tf_odom_lidar);
+        tf2::Transform tf_odom_base;
+        tf2::fromMsg(odom_base, tf_odom_base);
 
-        const tf2::Transform tf_map_odom = tf_map_base * tf_odom_lidar.inverse();
+        const tf2::Transform tf_map_odom = tf_map_base * tf_odom_base.inverse();
 
         geometry_msgs::msg::TransformStamped out;
         out.header.stamp    = stamp;

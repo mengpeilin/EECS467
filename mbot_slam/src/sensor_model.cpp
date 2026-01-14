@@ -22,17 +22,23 @@ bool SensorModel::getDistanceAt(double world_x, double world_y, const ObstacleDi
 
     const double gx = (world_x - grid_origin.position.x) / grid_res;
     const double gy = (world_y - grid_origin.position.y) / grid_res;
-    const int x0 = static_cast<int>(std::floor(gx)); // (x0, y0) is bottom-left cell
+    const int x0 = static_cast<int>(std::floor(gx));
     const int y0 = static_cast<int>(std::floor(gy));
-    const int x1 = x0 + 1;  // (x1, y1) is top-right cell
+    const int x1 = x0 + 1;
     const int y1 = y0 + 1;
 
     if (x0 < 0 || y0 < 0 || x1 >= grid_w || y1 >= grid_h) return false;
 
-    // TODO #1: Bilinear interpolation for distance
-    // Hint: use grid.getDistance(x, y) to get distance at integer cell (x, y)
-    //       e.g., grid.getDistance(x0, y0)
-    distance = 0;
+    const float fx = static_cast<float>(gx - x0);
+    const float fy = static_cast<float>(gy - y0);
+    const float d00 = grid.getDistance(x0, y0);
+    const float d10 = grid.getDistance(x1, y0);
+    const float d01 = grid.getDistance(x0, y1);
+    const float d11 = grid.getDistance(x1, y1);
+
+    const float d0 = d00 * (1 - fx) + d10 * fx;
+    const float d1 = d01 * (1 - fx) + d11 * fx;
+    distance = d0 * (1 - fy) + d1 * fy;
     return true;
 }
 
@@ -43,6 +49,8 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
     const double robot_x = pose.position.x;
     const double robot_y = pose.position.y;
     const double robot_yaw = yawFromQuaternion(pose.orientation);
+    const double inv_two_sigma2 = 1.0 / (2.0 * sigma_hit_ * sigma_hit_);
+    const double p_uniform = 1.0 / std::max(1e-3, static_cast<double>(scan.range_max - scan.range_min));
 
     double log_sum = 0.0;
     int used = 0;
@@ -61,19 +69,12 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
         const double endpoint_x = robot_x + range * std::cos(world_angle);
         const double endpoint_y = robot_y + range * std::sin(world_angle);
 
-        float distance_to_obstacle; // TODO #1: Bilinear interpolation for distance
+        float distance_to_obstacle;
         if (!getDistanceAt(endpoint_x, endpoint_y, grid, distance_to_obstacle)) continue;
 
-        // TODO #2: Compute uniform probability distribution over range
-        // Hint: p_uniform = 1.0 / (range_max - range_min)
-        const double p_uniform = 0.0;
-
-        // TODO #3: Compute sensor likelihood for this ray
-        // Hint: 
-        //       Compute Gaussian p_hit = exp(-(d²) / (2σ²)) where σ = sigma_hit_
-        //       Then mixture model p = Z_HIT * p_hit + Z_RAND * p_uniform
-        const double p_hit = 0.0;
-        const double p = 0.0;
+        const double distance_clamped = std::min<double>(distance_to_obstacle, 3.0 * sigma_hit_);
+        const double p_hit = std::exp(-(distance_clamped * distance_clamped) * inv_two_sigma2);
+        const double p = std::max(Z_HIT * p_hit + Z_RAND * p_uniform, 1e-12);
 
         log_sum += std::log(p);
         ++used;

@@ -17,6 +17,7 @@ public:
     ObstacleDistanceGrid();
     void computeDistFromMap(const nav_msgs::msg::OccupancyGrid &map);
     float getDistance(int x, int y) const;
+    int8_t getOccupancy(int x, int y) const;
     bool isCellInGrid(int x, int y) const;
 
     int getWidth() const { return width_; }

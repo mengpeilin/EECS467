@@ -35,6 +35,9 @@ ament_target_dependencies(slam_node
 install(DIRECTORY include/ DESTINATION include)
 install(DIRECTORY rviz/ DESTINATION share/${PROJECT_NAME}/rviz)
 install(TARGETS slam_node RUNTIME DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY maps
+  DESTINATION share/${PROJECT_NAME}/
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

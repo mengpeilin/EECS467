@@ -43,7 +43,6 @@ private:
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 
     sensor_msgs::msg::LaserScan::SharedPtr latest_scan_;
-    geometry_msgs::msg::Pose previous_pose_;
     bool initialized_ = false;
 
     void scanCallback(sensor_msgs::msg::LaserScan::SharedPtr msg)
@@ -53,6 +52,7 @@ private:
         // Lookup odometry transform at scan timestamp
         geometry_msgs::msg::Pose current_pose;
         try {
+            // LaserScan.msg: Timestamp in the header is the acquisition time of the first ray in the scan
             geometry_msgs::msg::TransformStamped tf_odom_lidar =
                 tf_buffer_->lookupTransform("odom", "lidar_link", msg->header.stamp);
             current_pose.position.x = tf_odom_lidar.transform.translation.x;
@@ -65,44 +65,80 @@ private:
         }
 
         if (!initialized_) {
-            previous_pose_ = current_pose;
             initialized_ = true;
             return;
         }
+        
+        // Calculate the odom pose at the end of the scan for interpolation
+        const auto current_pose_end = calculateScanEndPose(current_pose, latest_scan_);
+        MovingLaserScan scan(*msg, current_pose, current_pose_end);
 
-        float dx = current_pose.position.x - previous_pose_.position.x;
-        float dy = current_pose.position.y - previous_pose_.position.y;
-        float dist_moved = std::sqrt(dx * dx + dy * dy);
+        updateGrid(scan);
+    }
 
-        float yaw_prev = yawFromQuat(previous_pose_.orientation);
-        float yaw_curr = yawFromQuat(current_pose.orientation);
-        float dtheta = std::fabs(yaw_curr - yaw_prev);
-        if (dtheta > M_PI) dtheta = 2 * M_PI - dtheta;
+    geometry_msgs::msg::Pose calculateScanEndPose(
+        const geometry_msgs::msg::Pose &current_pose,
+        const sensor_msgs::msg::LaserScan::SharedPtr &scan)
+    {
+        // Calculate scan end time
+        const size_t num_rays = scan->ranges.size();
+        double scan_duration_sec = 0.0;
+        if (num_rays > 1 && scan->time_increment > 0.0) {
+            scan_duration_sec = scan->time_increment * (num_rays - 1);
+        }
+        const rclcpp::Time scan_end_time = scan->header.stamp +
+            rclcpp::Duration::from_seconds(std::max(0.0, scan_duration_sec));
 
-        if (dist_moved < 0.01 && dtheta < 0.05f) {
-            // TODO #1: fill up the TODOs in moving_laser_scan.cpp
-            MovingLaserScan scan(*msg, current_pose, current_pose);
-            updateGrid(scan);
-        } else {
-            MovingLaserScan scan(*msg, previous_pose_, current_pose);
-            updateGrid(scan);
+        // Lookup odometry at scan end time with tolerance for extrapolation
+        geometry_msgs::msg::Pose pose_end = current_pose;
+        try {
+            geometry_msgs::msg::TransformStamped tf_odom_lidar =
+                tf_buffer_->lookupTransform("odom", "lidar_link", scan_end_time,
+                                            rclcpp::Duration::from_seconds(0.1));  // 100ms tolerance
+
+            pose_end.position.x = tf_odom_lidar.transform.translation.x;
+            pose_end.position.y = tf_odom_lidar.transform.translation.y;
+            pose_end.position.z = tf_odom_lidar.transform.translation.z;
+            pose_end.orientation = tf_odom_lidar.transform.rotation;
+        } catch (tf2::TransformException &ex) {
+            // Use latest available transform if exact time not available
+            try {
+                geometry_msgs::msg::TransformStamped tf_odom_lidar =
+                    tf_buffer_->lookupTransform("odom", "lidar_link", tf2::TimePointZero);
+
+                pose_end.position.x = tf_odom_lidar.transform.translation.x;
+                pose_end.position.y = tf_odom_lidar.transform.translation.y;
+                pose_end.position.z = tf_odom_lidar.transform.translation.z;
+                pose_end.orientation = tf_odom_lidar.transform.rotation;
+            } catch (tf2::TransformException &ex2) {
+                RCLCPP_DEBUG(this->get_logger(), "Using start pose as fallback: %s", ex2.what());
+                // Return start pose as fallback
+            }
         }
 
-        previous_pose_ = current_pose;
+        return pose_end;
     }
 
     void updateGrid(const MovingLaserScan& scan)
     {
         for (const auto& ray : scan)
         {
-            // TODO #2: Fill up the TODOs in mapping.cpp
             auto ray_cells = bresenhamRayTrace(
                 ray.origin.x, ray.origin.y, ray.theta, ray.range, grid_);
                 
             if (!ray_cells.empty()) {
+
                 // TODO #3: update the grid based on ray_cells here
                 // We have a vector of cells along the ray, how to mark them?
                 // Hints: use grid_.markCellFree(x_idx, y_idx) and grid_.markCellOccupied(x_idx, y_idx)
+
+                // TODO 3.1 - loop through all ray_cells. Update cells as free along the ray, excluding the last cell
+               
+
+                // TODO 3.2 - Update the last cell only if there was a valid hit
+                
+
+                
             }
         }
     }

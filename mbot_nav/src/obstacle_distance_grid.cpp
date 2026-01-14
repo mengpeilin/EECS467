@@ -45,7 +45,9 @@ void ObstacleDistanceGrid::computeDistances()
     // distances_ is also 1D array representing 2D grid
     // later we will use dist_grid_ in sensor model to compare expected vs actual measurements
 
-    // Initialize queue with all occupied cells
+
+
+    // Step 1: Initialize queue with all occupied cells (value >= 50)
     for (int y = 0; y < height_; ++y) {
         for (int x = 0; x < width_; ++x) {
             int idx = y * width_ + x;
@@ -56,6 +58,13 @@ void ObstacleDistanceGrid::computeDistances()
         }
     }
 
-    // How would you implement the rest of the distance computation here? BFS is a common approach.
+    // Step 2: Flood-fill using 8-connected neighbors and Euclidean distance
+
+
+
+
+
+
+    
 }
 

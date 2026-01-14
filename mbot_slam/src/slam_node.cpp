@@ -30,7 +30,7 @@ public:
     : Node("mbot_slam_node"),
       tf_buffer_(std::make_shared<tf2_ros::Buffer>(this->get_clock())),
       tf_listener_(std::make_shared<tf2_ros::TransformListener>(*tf_buffer_)),
-      grid_(10.0, 10.0, 0.05, -5.0, -5.0)
+      grid_(10.0, 10.0, 0.02, -5.0, -5.0)
     {
         // Particle filter
         particle_filter_ = std::make_unique<mbot_slam::ParticleFilter>();
@@ -80,7 +80,6 @@ private:
     nav_msgs::msg::Path odom_path_;
 
     bool has_initialized_{false};
-    geometry_msgs::msg::Pose est_pose_end;
 
     // Scan callback
     void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr scan)
@@ -88,6 +87,7 @@ private:
         // Lookup odometry transform
         nav_msgs::msg::Odometry odom_msg;
         try {
+            // LaserScan.msg: Timestamp in the header is the acquisition time of the first ray in the scan
             geometry_msgs::msg::TransformStamped tf_odom_base =
                 tf_buffer_->lookupTransform("odom", "base_footprint", scan->header.stamp);
 
@@ -107,36 +107,32 @@ private:
                 particle_filter_->initializeAtPose(odom_msg.pose.pose);
                 particle_filter_->resetOdometry(odom_msg);
 
-                est_pose_end = odom_msg.pose.pose;
-
                 // Initialize grid with initial scan
                 MovingLaserScan initial_scan(*scan, odom_msg.pose.pose, odom_msg.pose.pose);
                 updateGridWithScan(initial_scan);
 
                 has_initialized_ = true;
-                RCLCPP_INFO(get_logger(), "Particle filter initialized at odometry origin (0, 0)");
+                RCLCPP_INFO(get_logger(), "Particle filter initialized at odometry pose.");
             } catch (tf2::TransformException &ex) {
                 RCLCPP_WARN(get_logger(), "Failed to lookup odom transform at init: %s", ex.what());
                 return;
             }
         } else {
-            // TODO #1: Particle filter - check particle_filter.cpp TODOs
+            // est_pose calculated based on the odometry at the time of the first ray in scan
+            // which means est_pose is where the robot at when the first ray was taken.
             const auto est_pose = particle_filter_->update(odom_msg, *scan, dist_grid_);
 
-            // TODO #2: fill up the TODOs in moving_laser_scan.cpp
-            MovingLaserScan interpolated_scan(*scan, est_pose, est_pose);               // works
+            // Calculate the estimated pose at the end of the scan for interpolation
+            const auto est_pose_end = calculateScanEndPose(est_pose, odom_msg, scan);
 
-            // TODO #6: calcualte the est_pose_end, the est_pose at the end of the lidar scan
-            // Hints: use message's member time_increment to calcualte the time duration
-            //          then you can get where the odometry at when the lidar's last ray fires
-            //          odom_end time stamp = scan->header.stamp + lidar time duration
-            //          then you will get est_pose_end = odometry_end + position corretction
-            //          and the position correction is also what we broadcast map -> odom
-            // MovingLaserScan interpolated_scan(*scan, est_pose, est_pose_end);        // optimal
+            // Interpolate the scan over the robot motion
+            MovingLaserScan interpolated_scan(*scan, est_pose, est_pose_end);
             updateGridWithScan(interpolated_scan);
 
+            // Broadcast map -> odom transform
             broadcastTf(est_pose, odom_msg.pose.pose, scan->header.stamp);
 
+            // Publish pose, cloud, paths for visualization
             publishPose(est_pose, scan->header.stamp);
             publishCloud(scan->header.stamp);
             publishEstPath(est_pose, scan->header.stamp);
@@ -144,22 +140,80 @@ private:
         }
     }
 
+    geometry_msgs::msg::Pose calculateScanEndPose(
+        const geometry_msgs::msg::Pose &est_pose,
+        const nav_msgs::msg::Odometry &odom_msg,
+        const sensor_msgs::msg::LaserScan::SharedPtr &scan)
+    {
+        // If we want to interpolate the scan over the robot motion
+        // we still need the pose at the end of the scan.
+        // 1. Calculate scan end time
+        const size_t num_rays = scan->ranges.size();
+        double scan_duration_sec = 0.0;
+        if (num_rays > 1 && scan->time_increment > 0.0) {
+            scan_duration_sec = scan->time_increment * (num_rays - 1);
+        }
+        const rclcpp::Time scan_end_time = scan->header.stamp +
+            rclcpp::Duration::from_seconds(std::max(0.0, scan_duration_sec));
+
+        // 2. Lookup odometry at scan end time
+        nav_msgs::msg::Odometry odom_msg_end;
+        try {
+            geometry_msgs::msg::TransformStamped tf_odom_base_end =
+                tf_buffer_->lookupTransform("odom", "base_footprint", scan_end_time);
+
+            odom_msg_end.header = tf_odom_base_end.header;
+            odom_msg_end.pose.pose.position.x = tf_odom_base_end.transform.translation.x;
+            odom_msg_end.pose.pose.position.y = tf_odom_base_end.transform.translation.y;
+            odom_msg_end.pose.pose.position.z = tf_odom_base_end.transform.translation.z;
+            odom_msg_end.pose.pose.orientation = tf_odom_base_end.transform.rotation;
+
+        } catch (tf2::TransformException &ex) {
+            RCLCPP_WARN(get_logger(), "Failed to lookup odom_msg_end transform: %s", ex.what());
+            return est_pose;  // Return start pose as fallback
+        }
+
+        // 3. Convert poses to tf2::Transform for math
+        tf2::Transform T_map_base_start, T_odom_base_start;
+        tf2::fromMsg(est_pose, T_map_base_start);
+        tf2::fromMsg(odom_msg.pose.pose, T_odom_base_start); // This is odom at start time
+
+        // 4. Calculate the correction: (map -> base) * (base -> odom) = (map -> odom)
+        tf2::Transform T_map_odom_correction = T_map_base_start * T_odom_base_start.inverse();
+
+        tf2::Transform T_odom_base_end;
+        tf2::fromMsg(odom_msg_end.pose.pose, T_odom_base_end);
+
+        // 5. Apply correction to get estimated map -> base at end of scan
+        // This correction is also what we will broadcast as map -> odom
+        tf2::Transform T_map_base_end = T_map_odom_correction * T_odom_base_end;
+
+        // 6. Convert back to a Pose message
+        geometry_msgs::msg::Pose est_pose_end;
+        tf2::toMsg(T_map_base_end, est_pose_end);
+
+        return est_pose_end;
+    }
+
     void updateGridWithScan(const MovingLaserScan &scan)
     {
         for (const auto& ray : scan)
         {
-            // TODO #3: Fill up the TODOs in mapping.cpp
             auto ray_cells = bresenhamRayTrace(
                 ray.origin.x, ray.origin.y, ray.theta, ray.range, grid_);
-                
+
             if (!ray_cells.empty()) {
-                // TODO #4: update the grid based on ray_cells here
-                // We have a vector of cells along the ray, how to mark them?
-                // Hints: use grid_.markCellFree(x_idx, y_idx) and grid_.markCellOccupied(x_idx, y_idx)
+                // Update cells as free along the ray, excluding the last cell
+                for (size_t j = 0; j + 1 < ray_cells.size(); ++j) {
+                    grid_.markCellFree(ray_cells[j].first, ray_cells[j].second);
+                }
+
+                // Mark the hit as occupied
+                grid_.markCellOccupied(ray_cells.back().first, ray_cells.back().second);
             }
         }
 
-        // TODO #5: Obstacle distance grid - obstacle_distance_grid.cpp
+        // Update distance grid ONCE after all rays are processed
         dist_grid_.computeDistFromMap(buildMapMessage());
     }
     

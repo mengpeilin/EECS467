@@ -36,9 +36,8 @@ public:
 private:
     nav_msgs::msg::Odometry prev_odom_;
 
-    // Motion-model parameters (alpha values from Probabilistic Robotics)
-    double k1_{0.05};          // rotational noise coefficient
-    double k2_{0.01};          // translational noise coefficient
+    double k1_{0.0015};          // rotational noise coefficient
+    double k2_{0.0008};          // translational noise coefficient
     double min_trans_{0.0025}; // [m] ignore motion below this
     double min_rot_ {0.02};    // [rad] ignore rotation below this
 

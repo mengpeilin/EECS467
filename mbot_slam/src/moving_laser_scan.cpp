@@ -11,7 +11,9 @@ inline geometry_msgs::msg::Point linearInterpolatePoint(const geometry_msgs::msg
                                            float t)
 {
     geometry_msgs::msg::Point out;
-    // TODO #2: Linear interpolation along x, y, z
+    out.x = a.x + t * (b.x - a.x);
+    out.y = a.y + t * (b.y - a.y);
+    out.z = a.z + t * (b.z - a.z);
     return out;
 }
 
@@ -35,8 +37,11 @@ void MovingLaserScan::interpolateRay(const sensor_msgs::msg::LaserScan& scan,
     const double yaw_start = mbot_slam::yawFromQuaternion(start_pose.orientation);
     const double yaw_end = mbot_slam::yawFromQuaternion(end_pose.orientation);
 
-    // Shortest angular delta
+    // How much the robot has turned during the scan
     double delta_yaw = mbot_slam::wrapToPi(yaw_end - yaw_start);
+
+    // Avoid divide-by-zero when num_rays==0 or num_rays==1
+    const float denom = (num_rays > 1) ? static_cast<float>(num_rays - 1) : 1.0f;
 
     // Iterate over all beams
     for (size_t i = 0; i < num_rays; ++i)
@@ -48,11 +53,17 @@ void MovingLaserScan::interpolateRay(const sensor_msgs::msg::LaserScan& scan,
             continue;
         }
 
-        // TODO #1: Fill up linearInterpolatePoint to get origin
-        // TODO #3: Calculate beam's interpolated angle
+        // Beam angle in the lidar_link frame
+        const float scan_angle = scan.angle_min + static_cast<float>(i) * scan.angle_increment;
+
+        const float t = static_cast<float>(i) / denom;
+        const double yaw = yaw_start + t * delta_yaw;  // assume constant angular velocity during scan
 
         InterpolatedRay ray;
-        // TODO #4: Fill in the ray fields
+        ray.origin = linearInterpolatePoint(start_pose.position, end_pose.position, t);  // world-frame origin at beam time
+        ray.theta  = scan_angle + yaw + M_PI;  // world-frame heading (base yaw + scan angle + pi for backward lidar)
+        ray.range  = range;
+
         rays_.push_back(ray);
     }
 }

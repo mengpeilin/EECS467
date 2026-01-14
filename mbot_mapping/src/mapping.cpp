@@ -17,8 +17,7 @@ void OccupancyGrid::markCellOccupied(int x, int y)
     if (idx >= 0 && idx < data_.size())
     {
         if (std::isnan(data_[idx])) data_[idx] = 0.0f;
-        // TODO #2: Update log-odds for occupied cell
-        // Hints: Utilize LogOdds variables from header file
+        data_[idx] = std::min(data_[idx] + kHitLogOdds, kMaxLogOdds);
     }
 }
 
@@ -28,8 +27,7 @@ void OccupancyGrid::markCellFree(int x, int y)
     if (idx >= 0 && idx < data_.size())
     {
         if (std::isnan(data_[idx])) data_[idx] = 0.0f;
-        // TODO #3: Update log-odds for free cell
-        // Hints: Utilize LogOdds variables from header file
+        data_[idx] = std::max(data_[idx] + kMissLogOdds, kMinLogOdds);
     }
 }
 
@@ -72,17 +70,17 @@ std::vector<std::pair<int, int>> bresenhamRayTrace(
 {
     std::vector<std::pair<int, int>> cells;
 
-    // Start and end point in world
-    float end_x = origin_x + range * std::cos(theta);
-    float end_y = origin_y + range * std::sin(theta);
+    // TODO #2: Implement Bresenham's algorithm
 
-    // Convert to grid coordinates
-    int x0 = grid.worldToGridX(origin_x);
-    int y0 = grid.worldToGridY(origin_y);
-    int x1 = grid.worldToGridX(end_x);
-    int y1 = grid.worldToGridY(end_y);
+    // tart and end point in world
 
-    // TODO #1: Implement Bresenham's algorithm
+
+
+    // Convert to grid coordinates use grid.worldToGridX and grid. worldToGridY
+
+
+    // Bresenham's algorithm
+
 
     return cells;
 }

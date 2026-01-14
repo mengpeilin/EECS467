@@ -1,6 +1,6 @@
 # SLAM Challenge
 
-GMapping implementation.
+Particle filter based SLAM.
 
 ## How to run
 **First** on NoMachine Terminal: 
@@ -17,4 +17,10 @@ ros2 run mbot_slam slam_node
 ```bash
 cd ~/mbot_ros_labs/src/mbot_rosbags
 ros2 bag play slam_test
+```
+
+**Save map** on VSCode Terminal #3:
+```bash
+cd ~/mbot_ros_labs/src/mbot_slam/maps
+ros2 run nav2_map_server map_saver_cli -f map_name
 ```

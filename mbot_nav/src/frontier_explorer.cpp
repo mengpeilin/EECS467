@@ -26,9 +26,11 @@ std::optional<geometry_msgs::msg::Pose2D> FrontierExplorer::selectGoal(
         return std::nullopt;
     }
 
+    RCLCPP_INFO(rclcpp::get_logger("frontier_explorer"), "Found %zu raw frontier points", raw_frontiers.size());
+
     // Filter frontiers by clearance
-    // TODO #4: tune the parameter goal_clearance
     std::vector<geometry_msgs::msg::Point> clearance_filtered;
+    // TODO #4: tune the parameter "goal_clearance"
     for (const auto& point : raw_frontiers) {
         int gx = static_cast<int>((point.x - dist_grid.getOrigin().position.x) / dist_grid.getResolution());
         int gy = static_cast<int>((point.y - dist_grid.getOrigin().position.y) / dist_grid.getResolution());
@@ -45,6 +47,7 @@ std::optional<geometry_msgs::msg::Pose2D> FrontierExplorer::selectGoal(
         return std::nullopt;
     }
 
+    // Cluster filtered frontiers by distance
     auto clustered = clusterFrontiers(clearance_filtered);
 
     // Pick the closest frontier cluster
@@ -57,7 +60,7 @@ std::optional<geometry_msgs::msg::Pose2D> FrontierExplorer::selectGoal(
         double distance = std::sqrt(dx * dx + dy * dy);
 
         // Skip if too close to robot
-        // TODO #5: tune the paramter min_frontier_distance
+        // TODO #5: tune the paramter "min_frontier_distance"
         if (distance < min_frontier_distance) {
             continue;
         }
@@ -98,19 +101,32 @@ std::vector<geometry_msgs::msg::Point> FrontierExplorer::detectFrontiers(
     // TODO #1: find all the frontier_points
     //  utilize the function isFrontierCell to check if cell is a frontier
     //  utilize the function gridToWorld to convert grid coordinates to world
+
+
+
+
+
+
+
     return frontier_points;
 }
 
 std::vector<geometry_msgs::msg::Point> FrontierExplorer::clusterFrontiers(
     const std::vector<geometry_msgs::msg::Point> &frontiers)
 {
+
     std::vector<geometry_msgs::msg::Point> clustered;
 
     // TODO #3: cluster the frontiers nearby
     //  Hint: when frontiers are all clustered together,
     //  we can calculate a centroid within a distance
     //  utilize the parameters in the header file => frontier_cluster_distance
+
+
+
+
     return clustered;
+
 }
 
 bool FrontierExplorer::isFrontierCell(int x, int y, const ObstacleDistanceGrid &dist_grid)
@@ -125,7 +141,13 @@ bool FrontierExplorer::isFrontierCell(int x, int y, const ObstacleDistanceGrid &
         return false;
     }
 
-    // TODO #2: what else to define a frontier cell?
+
+    // TODO #2: what else to define a frontier cell? (in other words, when to return true)?
+    // Hint: a frontier must be adjacent to unknown cell (8-connectivity)
+
+
+   
+
     return false;
 }
 

@@ -23,7 +23,7 @@ public:
     double min_frontier_distance = 0.1;
 
     // Clearance (meters) required around goal positions from obstacles
-    double goal_clearance = 0.1;
+    double goal_clearance = 0.15;
 
     // Distance (meters) for clustering nearby frontiers
     double frontier_cluster_distance = 0.15;

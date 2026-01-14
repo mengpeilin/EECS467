@@ -15,11 +15,10 @@ namespace mbot_slam
 class SensorModel
 {
 public:
-    static constexpr double SIGMA_HIT = 0.05;
+    static constexpr double SIGMA_HIT = 0.15;
     static constexpr int    RAY_STRIDE = 2;
-    static constexpr double Z_HIT = 0.9;      // Weight for accurate measurements
-    static constexpr double Z_RAND = 0.1;     // Weight for noise/outliers
-    mutable int call_count{0};
+    static constexpr double Z_HIT = 0.95;      // Weight for accurate measurements
+    static constexpr double Z_RAND = 0.05;     // Weight for noise/outliers
     explicit SensorModel();
 
     double likelihood(const geometry_msgs::msg::Pose&   pose,

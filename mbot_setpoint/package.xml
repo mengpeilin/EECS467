@@ -19,20 +19,10 @@
   <depend>tf2_geometry_msgs</depend>
   <depend>tf2_msgs</depend>
   <depend>std_msgs</depend>
+  <depend>mbot_interfaces</depend>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
-
-  <!-- Required for custom message generation -->
-  <build_depend>rosidl_default_generators</build_depend>
-  <exec_depend>rosidl_default_runtime</exec_depend>
-
-  <!-- Optional: Add specific type support if needed -->
-  <build_depend>rosidl_typesupport_fastrtps_cpp</build_depend>
-  <exec_depend>rosidl_typesupport_fastrtps_cpp</exec_depend>
-
-  <!-- Grouping -->
-  <member_of_group>rosidl_interface_packages</member_of_group>
 
   <!-- Linting -->
   <test_depend>ament_lint_auto</test_depend>

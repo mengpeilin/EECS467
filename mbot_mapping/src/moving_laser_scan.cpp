@@ -13,7 +13,9 @@ inline geometry_msgs::msg::Point linearInterpolatePoint(const geometry_msgs::msg
                                            float t)
 {
     geometry_msgs::msg::Point out;
-    // TODO #2: Linear interpolation along x, y, z
+    out.x = a.x + t * (b.x - a.x);
+    out.y = a.y + t * (b.y - a.y);
+    out.z = a.z + t * (b.z - a.z);
     return out;
 }
 
@@ -55,7 +57,11 @@ void MovingLaserScan::interpolateRay(const sensor_msgs::msg::LaserScan& scan,
     const double yaw_start = yawFromQuaternion(start_pose.orientation);
     const double yaw_end = yawFromQuaternion(end_pose.orientation);
 
+    // Shortest angular delta
     double delta_yaw = wrapToPi(yaw_end - yaw_start);
+
+    // Avoid divide-by-zero when num_rays==0 or num_rays==1
+    const float denom = (num_rays > 1) ? static_cast<float>(num_rays - 1) : 1.0f;
 
     // Iterate over all beams
     for (size_t i = 0; i < num_rays; ++i)
@@ -67,11 +73,18 @@ void MovingLaserScan::interpolateRay(const sensor_msgs::msg::LaserScan& scan,
             continue;
         }
 
-        // TODO #1: Fill up linearInterpolatePoint to get origin
-        // TODO #3: Calculate beam's interpolated angle
+        // Beam angle in the laser frame
+        const float scan_angle = scan.angle_min + static_cast<float>(i) * scan.angle_increment;
+
+        const float t = static_cast<float>(i) / denom;
+        const double yaw = yaw_start + t * delta_yaw;  // shortest-path yaw interpolation
 
         InterpolatedRay ray;
-        // TODO #4: Fill in the ray fields
+
+        // TODO #1: Compute ray.origin, ray.theta, and ray.range (after interpolation). Use linearInterpolatePoint() function.
+ 
+
+
         rays_.push_back(ray);
     }
 }

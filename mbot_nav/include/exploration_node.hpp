@@ -4,7 +4,7 @@
 #include "nav_msgs/msg/occupancy_grid.hpp"
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/pose2_d.hpp"
-#include "mbot_nav/msg/pose2_d_array.hpp"
+#include "mbot_interfaces/msg/pose2_d_array.hpp"
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/buffer.h>
 #include <tf2/exceptions.h>
@@ -26,8 +26,8 @@ private:
     void mapCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg);
     void timerCallback();
     void planPath();
-    void publishWaypoints(const mbot_nav::msg::Pose2DArray& path);
-    void publishPath(const mbot_nav::msg::Pose2DArray& path);
+    void publishWaypoints(const mbot_interfaces::msg::Pose2DArray& path);
+    void publishPath(const mbot_interfaces::msg::Pose2DArray& path);
 
     // Pose retrieval
     bool getRobotPose(geometry_msgs::msg::Pose2D &pose);
@@ -39,7 +39,7 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
 
     // Publishers
-    rclcpp::Publisher<mbot_nav::msg::Pose2DArray>::SharedPtr waypoints_pub_;
+    rclcpp::Publisher<mbot_interfaces::msg::Pose2DArray>::SharedPtr waypoints_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr path_pub_;
 
     // Data

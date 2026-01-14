@@ -20,14 +20,17 @@ void ActionModel::setOdomReference(const nav_msgs::msg::Odometry& odom)
 
 bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
 {
-
+    // Delta translation in the odom frame
     const double dx = odom.pose.pose.position.x - prev_odom_.pose.pose.position.x;
     const double dy = odom.pose.pose.position.y - prev_odom_.pose.pose.position.y;
+
+    // Extract planar headings
     const double theta_prev = yawFromQuaternion(prev_odom_.pose.pose.orientation);
     const double theta_curr = yawFromQuaternion(odom.pose.pose.orientation);
 
+
     // TODO #1: Compute the rotation-translation-rotation motion components
-    // Replace 0s with the correct expressions
+    //          Replace following 0s with the correct expressions
     double delta_trans = 0;
     double delta_theta = 0;
     rot1_ = 0;
@@ -53,7 +56,7 @@ bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
 
 geometry_msgs::msg::Pose ActionModel::propagateParticle(const geometry_msgs::msg::Pose& pose)
 {
-    // TODO #3: Sample noisy motion components
+    /// TODO #3: Sample noisy motion components
     // Hint: use std::normal_distribution
     // Hint: random_gen is available as a member variable
     // e.g., std::normal_distribution<double> dist(mean, std_dev);
@@ -72,4 +75,5 @@ geometry_msgs::msg::Pose ActionModel::propagateParticle(const geometry_msgs::msg
     setOrientationFromYaw(new_pose, wrapToPi(0));
 
     return new_pose;
+
 }

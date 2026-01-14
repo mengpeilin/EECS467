@@ -28,7 +28,7 @@ ros2 launch mbot_mapping mapping.launch.py
 
 **Terminal 3** - After mapping the entire area, save the map:
 ```bash
-cd ~/mbot_labs_ws/src/mbot_mapping/maps
+cd ~/mbot_ros_labs/src/mbot_mapping/maps
 ros2 run nav2_map_server map_saver_cli -f map_name
 ```
 

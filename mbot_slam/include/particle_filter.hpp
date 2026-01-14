@@ -33,7 +33,8 @@ class ParticleFilter
 public:
     // Configuration constants
     static constexpr int NUM_PARTICLES = 800;
-    
+    static constexpr double RESAMPLE_THRESHOLD = 0.5;  // Resample when Neff < threshold * N_particles
+
     ParticleFilter();
 
     // Initialization
@@ -65,6 +66,7 @@ private:
                                                   const ObstacleDistanceGrid&  grid) const;
 
     geometry_msgs::msg::Pose computeBestEstimate(const nav2_msgs::msg::ParticleCloud& cloud) const;
+    double computeEffectiveSampleSize(const nav2_msgs::msg::ParticleCloud& cloud) const;
 
     // Data members
     int                           num_particles_;   // number of particles

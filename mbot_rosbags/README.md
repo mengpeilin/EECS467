@@ -1,8 +1,7 @@
 # MBot ROS Bags
 
 ```bash
-cd ~/mbot_ros_labs/src/mbot_rosbags
-ros2 bag play slam_test
+ros2 bag play maze1.mcap
 ```
 ## Collect ros bag for localization
 First map the maze, then run nav2_acml to have "ground truth" pose, then run the following:

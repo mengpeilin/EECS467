@@ -13,7 +13,7 @@ NavigationNode::NavigationNode()
     RCLCPP_INFO(this->get_logger(), "Pose source: %s", pose_source_.c_str());
 
     // Publishers
-    waypoints_pub_ = this->create_publisher<mbot_nav::msg::Pose2DArray>(
+    waypoints_pub_ = this->create_publisher<mbot_interfaces::msg::Pose2DArray>(
         "/waypoints", 10);
 
     path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
@@ -26,7 +26,7 @@ NavigationNode::NavigationNode()
 
         // Create a timer to periodically update initial pose from TF
         tf_update_timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(100),
+            std::chrono::milliseconds(1000),
             std::bind(&NavigationNode::updateInitialPose, this));
 
         RCLCPP_INFO(this->get_logger(), "Using TF-based pose lookup");
@@ -56,7 +56,7 @@ void NavigationNode::mapCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr m
 {
     latest_map_ = msg;
     dist_grid_.computeDistFromMap(*msg);
-    RCLCPP_INFO(this->get_logger(), "Updated distance grid from map");
+    // RCLCPP_INFO(this->get_logger(), "Updated distance grid from map");
 }
 
 void NavigationNode::initialPoseCallback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr msg)
@@ -113,6 +113,9 @@ void NavigationNode::goalPoseCallback(const geometry_msgs::msg::PoseStamped::Sha
 
 void NavigationNode::planPath()
 {
+    // we call planPath() in astar.cpp here to get the path
+    // path will get published as waypoints, and your motion controller should follow the path
+
     if (!latest_map_) {
         RCLCPP_WARN(this->get_logger(), "No map available yet");
         return;
@@ -123,10 +126,7 @@ void NavigationNode::planPath()
         return;
     }
 
-    // TODO: finish TODOs in astar.cpp
-    // we call planPath() here to get the path
-    // path will get published as waypoints, and your motion controller should follow the path
-    mbot_nav::msg::Pose2DArray path;
+    mbot_interfaces::msg::Pose2DArray path;
     bool success = astar_planner_.planPath(dist_grid_, initial_pose_.value(), goal_pose_.value(), path);
 
     if (!success || path.poses.empty()) {
@@ -139,12 +139,12 @@ void NavigationNode::planPath()
     publishPath(path);
 }
 
-void NavigationNode::publishWaypoints(const mbot_nav::msg::Pose2DArray& path)
+void NavigationNode::publishWaypoints(const mbot_interfaces::msg::Pose2DArray& path)
 {
     waypoints_pub_->publish(path);
 }
 
-void NavigationNode::publishPath(const mbot_nav::msg::Pose2DArray& path)
+void NavigationNode::publishPath(const mbot_interfaces::msg::Pose2DArray& path)
 {
     nav_msgs::msg::Path path_msg;
     path_msg.header.stamp = this->now();
@@ -192,7 +192,7 @@ bool NavigationNode::getRobotPoseFromTF(geometry_msgs::msg::Pose2D& pose)
 
         return true;
     } catch (tf2::TransformException& ex) {
-        // Don't spam the log - just silently fail until TF is available
+        RCLCPP_WARN(this->get_logger(), "Robot pose TF look up error: %s", ex.what());
         return false;
     }
 }

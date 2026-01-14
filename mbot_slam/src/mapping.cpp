@@ -17,22 +17,20 @@ OccupancyGrid::OccupancyGrid(float width_m, float height_m, float resolution, fl
 void OccupancyGrid::markCellOccupied(int x, int y)
 {
     int idx = toIndex(x, y);
-    if (idx >= 0 && idx < data_.size())
+    if (idx >= 0 && static_cast<size_t>(idx) < data_.size())
     {
         if (std::isnan(data_[idx])) data_[idx] = 0.0f;
-        // TODO #2: Update log-odds for occupied cell
-        // Hints: Utilize LogOdds variables from header file
+        data_[idx] = std::min(data_[idx] + kHitLogOdds, kMaxLogOdds);
     }
 }
 
 void OccupancyGrid::markCellFree(int x, int y)
 {
     int idx = toIndex(x, y);
-    if (idx >= 0 && idx < data_.size())
+    if (idx >= 0 && static_cast<size_t>(idx) < data_.size())
     {
         if (std::isnan(data_[idx])) data_[idx] = 0.0f;
-        // TODO #3: Update log-odds for free cell
-        // Hints: Utilize LogOdds variables from header file
+        data_[idx] = std::max(data_[idx] + kMissLogOdds, kMinLogOdds);
     }
 }
 
@@ -85,10 +83,35 @@ std::vector<std::pair<int, int>> bresenhamRayTrace(
     int x1 = grid.worldToGridX(end_x);
     int y1 = grid.worldToGridY(end_y);
 
-    // TODO #1: Implement Bresenham's algorithm
+    // Bresenham's algorithm
+    int dx = std::abs(x1 - x0);
+    int dy = std::abs(y1 - y0);
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+    int err = dx - dy;
+
+    int x = x0;
+    int y = y0;
+
+    while (true) {
+        if (grid.toIndex(x, y) >= 0)
+            cells.emplace_back(x, y);
+
+        if (x == x1 && y == y1)
+            break;
+
+        int e2 = 2 * err;
+        if (e2 >= -dy) {
+            err -= dy;
+            x += sx;
+        }
+        if (e2 <= dx) {
+            err += dx;
+            y += sy;
+        }
+    }
 
     return cells;
 }
-
 
 } // namespace mbot_slam

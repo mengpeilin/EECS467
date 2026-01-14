@@ -65,6 +65,7 @@ private:
         }
         last_callback_time_ = current_time;
 
+        // Calculate wheel velocities using encoder delta_time (timing from firmware)
         mbot_calculate_wheel_speed(
             msg.delta_time,
             msg.delta_ticks[MOT_L],
@@ -98,22 +99,33 @@ private:
     }
 
     void mbot_calculate_wheel_speed(float dt, int encoder_tick_L, int encoder_tick_R, float* wheel_vel_L, float* wheel_vel_R){
-        // TODO #2
-        // Calculate wheel velocities wheel_vel_L and wheel_vel_R in m/s
-        return;
+        float conversion = 1E6f * (1.0f / GEAR_RATIO) * (1.0f / ENCODER_RES) * 2.0f * M_PI;
+
+        if (dt <= 0) { /* Avoid division by zero or invalid dt */ 
+            *wheel_vel_L = 0.0f;
+            *wheel_vel_R = 0.0f;
+            return; 
+        }
+
+        *wheel_vel_L = ENCODER_POLARITY_L * (conversion / dt) * encoder_tick_L;
+        *wheel_vel_R = ENCODER_POLARITY_R * (conversion / dt) * encoder_tick_R;
     }
 
     static void mbot_calculate_diff_body_vel(float wheel_left_vel, float wheel_right_vel, float* vx, float* vy, float* wz) {
-        // TODO #3
-        // Calculate robot body velocities vx, vy, wz (vy is always 0 for differential drive)
-        return;
+        // Calculate forward velocity and angular velocity
+        *vx = DIFF_WHEEL_RADIUS * (wheel_left_vel - wheel_right_vel) / 2.0f;
+        *vy = 0.0;
+        *wz = DIFF_WHEEL_RADIUS * (-wheel_left_vel - wheel_right_vel) / (2.0f * DIFF_BASE_RADIUS);
     }
 
     void mbot_calculate_odometry(float vx, float vy, float wz, float dt, float* x, float* y, float* theta) {
-        // TODO #4
-        // Calculate odometry x, y, theta based on body velocities and time delta
-        // Remember to normalize theta between -pi and pi
-        return;
+        *x += vx * dt * cos(*theta) - vy * dt * sin(*theta);
+        *y += vx * dt * sin(*theta) + vy * dt * cos(*theta);
+        *theta += wz * dt;
+
+        // Normalize theta to [-pi, pi]
+        while (*theta > M_PI) *theta -= 2.0 * M_PI;
+        while (*theta <= -M_PI) *theta += 2.0 * M_PI;
     }
 
     void publish_odometry_data(const mbot_interfaces::msg::Encoders msg, nav_msgs::msg::Odometry *odom_msg, float vx, float vy, float wz){

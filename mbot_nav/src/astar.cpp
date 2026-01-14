@@ -17,9 +17,9 @@ float AStarPlanner::heuristic(int x1, int y1, int x2, int y2) {
 bool AStarPlanner::planPath(const ObstacleDistanceGrid& dist_grid,
                             const geometry_msgs::msg::Pose2D& start,
                             const geometry_msgs::msg::Pose2D& goal,
-                            mbot_nav::msg::Pose2DArray& path) {
+                            mbot_interfaces::msg::Pose2DArray& path) {
     path.poses.clear();
-    mbot_nav::msg::Pose2DArray raw_path;
+    mbot_interfaces::msg::Pose2DArray raw_path;
     int width = dist_grid.getWidth();
 
     int start_x = static_cast<int>((start.x - dist_grid.getOrigin().position.x) / dist_grid.getResolution());
@@ -27,9 +27,9 @@ bool AStarPlanner::planPath(const ObstacleDistanceGrid& dist_grid,
     int goal_x = static_cast<int>((goal.x - dist_grid.getOrigin().position.x) / dist_grid.getResolution());
     int goal_y = static_cast<int>((goal.y - dist_grid.getOrigin().position.y) / dist_grid.getResolution());
 
-    std::priority_queue<AStarNode, std::vector<AStarNode>, std::greater<>> open; // stores nodes to be explored
-    std::unordered_map<int, float> cost_so_far; // g-cost
-    std::unordered_map<int, int> came_from;     // stores parent node
+    std::priority_queue<AStarNode, std::vector<AStarNode>, std::greater<>> open;
+    std::unordered_map<int, float> cost_so_far;
+    std::unordered_map<int, int> came_from;
 
     int start_idx = toIndex(start_x, start_y, width);
     int goal_idx = toIndex(goal_x, goal_y, width);
@@ -47,21 +47,25 @@ bool AStarPlanner::planPath(const ObstacleDistanceGrid& dist_grid,
 
         int curr_idx = toIndex(current.x, current.y, width);
         if (curr_idx == goal_idx) {
-            // Construct the path
             auto path_indices = reconstructPath(came_from, goal_idx, width);
-            // Convert path to world 
             for (size_t i = 0; i < path_indices.size(); ++i) {
                 const auto& [x, y] = path_indices[i];
                 geometry_msgs::msg::Pose2D pose;
                 pose.x = x * dist_grid.getResolution() + dist_grid.getOrigin().position.x;
                 pose.y = y * dist_grid.getResolution() + dist_grid.getOrigin().position.y;
 
-                // TODO #3: add pose.theta here
-                //       how would you decide the pose's heading?
+                // TODO #3: add pose.theta here - how would you decide the pose's heading?
+                // Hint: loop through path_indices and compute what's nx, ny, and thus compute pose.theta
+                // Hint: what is the heading at goal pose?
+
+
+
+
+
 
                 raw_path.poses.push_back(pose);
             }
-            path = smoothPath(dist_grid, raw_path); 
+            path = smoothPath(dist_grid, raw_path);   // prune / smooth
             return true;
         }
 
@@ -74,12 +78,27 @@ bool AStarPlanner::planPath(const ObstacleDistanceGrid& dist_grid,
             float obs_dist = dist_grid.getDistance(nx, ny);
             int occupancy = dist_grid.getOccupancy(nx, ny);
 
-            // TODO #1: Add new AStarNode to open queue
-            // Hint: to construct AStarNode, you need x,y which is (nx,ny) here
-            //       also need g-cost and h-cost
-            //       utilize heuristic(), this is the h-cost
-            //       when calculate g-cost, also consider where are the places
-            //       we don't want the robot to go.
+            // TODO #1: Compute the cost penalty and moving cost (heuristics)
+            float penalty = 0.0f;
+
+            // Penalize known obstacles heavily
+           
+
+
+            // Penalize unknown regions mildly
+            
+
+
+            // Otherwise, cost is based on inverse of obstacle distance
+           
+
+            // compute move_cost and new_cost. 
+            // You will also need to Add new AStarNode to open queue, which contains (nx,ny) and their g-cost and h-cost
+            // You may find heuristic() helpful. 
+            // Incorporate the penalty you computed above in g_cost
+        
+
+            
         }
     }
 
@@ -91,6 +110,13 @@ std::vector<std::pair<int, int>> AStarPlanner::reconstructPath(
 
     std::vector<std::pair<int, int>> path;
     // TODO #2: construct the raw path here
+    // Hint: You may find std::reverse() helpful
+
+    
+
+
+
+
 
     return path;
 }
@@ -115,10 +141,11 @@ bool AStarPlanner::isLineFree(const ObstacleDistanceGrid& dist_grid, float x0, f
     return true;
 }
 
-mbot_nav::msg::Pose2DArray AStarPlanner::smoothPath(
-    const ObstacleDistanceGrid& dist_grid, const mbot_nav::msg::Pose2DArray& raw_path)
+mbot_interfaces::msg::Pose2DArray AStarPlanner::smoothPath(
+    const ObstacleDistanceGrid& dist_grid, const mbot_interfaces::msg::Pose2DArray& raw_path)
 {
-    mbot_nav::msg::Pose2DArray pruned;
+
+     mbot_nav::msg::Pose2DArray pruned;
     if (raw_path.poses.empty()) return pruned;
 
     pruned.poses.push_back(raw_path.poses.front());
@@ -127,6 +154,11 @@ mbot_nav::msg::Pose2DArray AStarPlanner::smoothPath(
     // Hint: say if you have 100 waypoints and they are in tiny step, 
     // maybe we can downsize them by removing midpoints
     // utilize the function isLineFree()
+
+
+
+
+
 
     return pruned;
 }

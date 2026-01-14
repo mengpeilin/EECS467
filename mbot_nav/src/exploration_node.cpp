@@ -5,7 +5,7 @@ ExplorationNode::ExplorationNode()
 : Node("exploration_node")
 {
     // Publishers
-    waypoints_pub_ = this->create_publisher<mbot_nav::msg::Pose2DArray>(
+    waypoints_pub_ = this->create_publisher<mbot_interfaces::msg::Pose2DArray>(
         "/waypoints", 10);
 
     path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
@@ -94,8 +94,8 @@ void ExplorationNode::timerCallback()
         return;  // Stay idle after returning to origin
     }
 
-    // TODO: Find a valid frontier, we call selectGoal() here
-    //  finish TODOs in frontier_explorer.cpp
+    //Find a valid frontier, we call selectGoal() here
+    // Try to find a frontier goal
     auto goal = frontier_explorer_.selectGoal(robot_pose, dist_grid_);
     if (!goal) {
         // No frontier found - increment counter and give it another chance
@@ -140,7 +140,7 @@ void ExplorationNode::planPath()
         return;
     }
 
-    mbot_nav::msg::Pose2DArray path;
+    mbot_interfaces::msg::Pose2DArray path;
     bool success = astar_planner_.planPath(dist_grid_, robot_pose, current_goal_.value(), path);
 
     if (!success || path.poses.empty()) {
@@ -153,12 +153,12 @@ void ExplorationNode::planPath()
     publishPath(path);
 }
 
-void ExplorationNode::publishWaypoints(const mbot_nav::msg::Pose2DArray& path)
+void ExplorationNode::publishWaypoints(const mbot_interfaces::msg::Pose2DArray& path)
 {
     waypoints_pub_->publish(path);
 }
 
-void ExplorationNode::publishPath(const mbot_nav::msg::Pose2DArray& path)
+void ExplorationNode::publishPath(const mbot_interfaces::msg::Pose2DArray& path)
 {
     nav_msgs::msg::Path path_msg;
     path_msg.header.stamp = this->now();

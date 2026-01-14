@@ -6,7 +6,7 @@
 #include "geometry_msgs/msg/pose2_d.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_with_covariance_stamped.hpp"
-#include "mbot_nav/msg/pose2_d_array.hpp"
+#include "mbot_interfaces/msg/pose2_d_array.hpp"
 #include "tf2_ros/buffer.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2/exceptions.h"
@@ -31,8 +31,8 @@ private:
 
     // Planning
     void planPath();
-    void publishWaypoints(const mbot_nav::msg::Pose2DArray& path);
-    void publishPath(const mbot_nav::msg::Pose2DArray& path);
+    void publishWaypoints(const mbot_interfaces::msg::Pose2DArray& path);
+    void publishPath(const mbot_interfaces::msg::Pose2DArray& path);
 
     // Pose retrieval
     bool getRobotPoseFromTF(geometry_msgs::msg::Pose2D& pose);
@@ -44,7 +44,7 @@ private:
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr goal_pose_sub_;
 
     // Publishers
-    rclcpp::Publisher<mbot_nav::msg::Pose2DArray>::SharedPtr waypoints_pub_;
+    rclcpp::Publisher<mbot_interfaces::msg::Pose2DArray>::SharedPtr waypoints_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr path_pub_;
 
     // Data
