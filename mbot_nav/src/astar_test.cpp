@@ -57,7 +57,7 @@ static geometry_msgs::msg::Pose2D worldToPose(float x, float y, float theta)
 }
 
 // Check waypoints for collisions and proximity to obstacles
-static bool checkPathCollisions(const mbot_nav::msg::Pose2DArray& path, const ObstacleDistanceGrid& grid)
+static bool checkPathCollisions(const mbot_interfaces::msg::Pose2DArray& path, const ObstacleDistanceGrid& grid)
 {
     const float COLLISION_THRESHOLD = 0.0f;  // goes through obstacle
     const float WARNING_THRESHOLD = 0.08f;   // 8cm from obstacle
@@ -101,7 +101,7 @@ static bool checkPathCollisions(const mbot_nav::msg::Pose2DArray& path, const Ob
 
 
 // Verify final heading of path
-static bool verifyFinalHeading(const mbot_nav::msg::Pose2DArray& path,
+static bool verifyFinalHeading(const mbot_interfaces::msg::Pose2DArray& path,
                                float expected_theta,
                                float tolerance = 0.1f)
 {
@@ -160,7 +160,7 @@ void runPlannerTest(mbot_nav::AStarPlanner& planner)
     auto start = worldToPose(1.0f, 1.5f, 0.0f);
     auto goal = worldToPose(2.5f, 1.5f, M_PI);
 
-    mbot_nav::msg::Pose2DArray path;
+    mbot_interfaces::msg::Pose2DArray path;
     bool ok = planner.planPath(grid, start, goal, path);
 
     if (ok && path.poses.size() > 0) {
