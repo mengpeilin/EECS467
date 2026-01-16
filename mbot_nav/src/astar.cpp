@@ -145,7 +145,7 @@ mbot_interfaces::msg::Pose2DArray AStarPlanner::smoothPath(
     const ObstacleDistanceGrid& dist_grid, const mbot_interfaces::msg::Pose2DArray& raw_path)
 {
 
-     mbot_nav::msg::Pose2DArray pruned;
+    mbot_interfaces::msg::Pose2DArray pruned;
     if (raw_path.poses.empty()) return pruned;
 
     pruned.poses.push_back(raw_path.poses.front());
