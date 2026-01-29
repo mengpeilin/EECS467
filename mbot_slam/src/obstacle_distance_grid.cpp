@@ -40,7 +40,12 @@ void ObstacleDistanceGrid::computeDistances()
 {
     std::queue<GridCell> queue;
 
-    // Step 1: Initialize queue with all occupied cells (value >= 50)
+    // Compute distances to nearest obstacle for each cell, then fill distances_ vector
+    // occupancy_ is 1D array representing 2D grid
+    // distances_ is also 1D array representing 2D grid
+    // later we will use dist_grid_ in sensor model to compare expected vs actual measurements
+
+    // step 1 - Initialize queue with all occupied cells
     for (int y = 0; y < height_; ++y) {
         for (int x = 0; x < width_; ++x) {
             int idx = y * width_ + x;
@@ -51,28 +56,13 @@ void ObstacleDistanceGrid::computeDistances()
         }
     }
 
-    // Step 2: Flood-fill using 8-connected neighbors and Euclidean distance
-    const int dx[8] = {1, -1, 0, 0,  1, 1, -1, -1};
-    const int dy[8] = {0, 0, 1, -1,  1, -1, 1, -1};
+    // Step 2 TODO: Flood-fill using 8-connected neighbors and Euclidean distance
+    //  Compute the neighbors, loop through the queue, update neighbor nx, ny,  then queue.emplace(nx, ny)
+    //  You are also encouraged to explore other approaches to finish the distance computation.
 
-    while (!queue.empty()) {
-        GridCell cell = queue.front();
-        queue.pop();
-        float known_dist = getDistance(cell.x, cell.y);
 
-        for (int i = 0; i < 8; ++i) {
-            int nx = cell.x + dx[i];
-            int ny = cell.y + dy[i];
-            if (!isCellInGrid(nx, ny)) continue;
+   
+    
 
-            int neighbor_idx = ny * width_ + nx;
-            float est_neighbor_dist = known_dist + std::hypot(dx[i], dy[i]) * resolution_;
 
-            if (est_neighbor_dist < distances_[neighbor_idx]) {
-                distances_[neighbor_idx] = est_neighbor_dist;
-                queue.emplace(nx, ny);
-            }
-        }
-    }
 }
-
