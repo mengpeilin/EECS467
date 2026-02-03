@@ -31,11 +31,11 @@ bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
 
     // TODO #1: Compute the rotation-translation-rotation motion components
     //          Replace following 0s with the correct expressions
-    double delta_trans = 0;
-    double delta_theta = 0;
-    rot1_ = 0;
-    trans_ = 0;
-    rot2_ = 0;
+    double delta_trans = std::hypot(dx, dy);
+    double delta_theta = wrapToPi(theta_curr - theta_prev);
+    rot1_  = wrapToPi(std::atan2(dy, dx) - theta_prev);
+    trans_ = delta_trans;
+    rot2_  = wrapToPi(theta_curr - theta_prev - rot1_);
 
     const bool moved =
         (delta_trans >= min_trans_) ||
@@ -44,9 +44,9 @@ bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
     if (moved) {
         // TODO #2: calcuate standard deviations (alpha-model)
         // Hint: use k1_ and k2_ member variables
-        rot1_std_  = 0;
-        trans_std_ = 0;
-        rot2_std_  = 0;
+        rot1_std_  = k1_ * std::abs(rot1_) + k2_ * trans_;
+        trans_std_ = k1_ * trans_ + k2_ * (std::abs(rot1_) + std::abs(rot2_));
+        rot2_std_  = k1_ * std::abs(rot2_) + k2_ * trans_;
     }
 
     prev_odom_ = odom;
@@ -63,16 +63,23 @@ geometry_msgs::msg::Pose ActionModel::propagateParticle(const geometry_msgs::msg
     //       double sample = dist(random_gen);
     //       where mean should be the odometry
     // Replace 0s with the correct expressions
-    double sampled_rot1  = 0.0;
-    double sampled_trans = 0.0;
-    double sampled_rot2  = 0.0; 
+    std::normal_distribution<double> dist_rot1(rot1_, std::max(0.0, rot1_std_));
+    std::normal_distribution<double> dist_trans(trans_, std::max(0.0, trans_std_));
+    std::normal_distribution<double> dist_rot2(rot2_, std::max(0.0, rot2_std_));
+
+    const double sampled_rot1  = dist_rot1(random_gen);
+    const double sampled_trans = dist_trans(random_gen);
+    const double sampled_rot2  = dist_rot2(random_gen);
 
     // TODO #4: Update particle position and orientation based on sampled motion
     // Replace 0s with the correct expressions
-    geometry_msgs::msg::Pose new_pose;
-    new_pose.position.x = 0;
-    new_pose.position.y = 0;
-    setOrientationFromYaw(new_pose, wrapToPi(0));
+    geometry_msgs::msg::Pose new_pose = pose;
+    const double theta = yawFromQuaternion(pose.orientation);
+    const double theta_prime = wrapToPi(theta + sampled_rot1);
+    new_pose.position.x = pose.position.x + sampled_trans * std::cos(theta_prime);
+    new_pose.position.y = pose.position.y + sampled_trans * std::sin(theta_prime);
+    const double theta_final = wrapToPi(theta_prime + sampled_rot2);
+    setOrientationFromYaw(new_pose, theta_final);
 
     return new_pose;
 

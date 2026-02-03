@@ -82,7 +82,10 @@ void MovingLaserScan::interpolateRay(const sensor_msgs::msg::LaserScan& scan,
         InterpolatedRay ray;
 
         // TODO #1: Compute ray.origin, ray.theta, and ray.range (after interpolation). Use linearInterpolatePoint() function.
- 
+        ray.origin = linearInterpolatePoint(start_pose.position, end_pose.position, t);
+        ray.theta = yaw + scan_angle;
+        ray.range = range;
+        
 
 
         rays_.push_back(ray);

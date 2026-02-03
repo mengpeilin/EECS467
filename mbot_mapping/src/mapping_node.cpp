@@ -131,14 +131,20 @@ private:
                 // TODO #3: update the grid based on ray_cells here
                 // We have a vector of cells along the ray, how to mark them?
                 // Hints: use grid_.markCellFree(x_idx, y_idx) and grid_.markCellOccupied(x_idx, y_idx)
-
+                
                 // TODO 3.1 - loop through all ray_cells. Update cells as free along the ray, excluding the last cell
-               
+                for (size_t i = 0; i < ray_cells.size() - 1; ++i) {
+                    int x_idx = ray_cells[i].first;
+                    int y_idx = ray_cells[i].second;
+                    grid_.markCellFree(x_idx, y_idx);
+                }
 
                 // TODO 3.2 - Update the last cell only if there was a valid hit
-                
-
-                
+                int last_x_idx = ray_cells.back().first;
+                int last_y_idx = ray_cells.back().second;
+                if (ray.range < latest_scan_->range_max) {
+                    grid_.markCellOccupied(last_x_idx, last_y_idx);
+                }                
             }
         }
     }

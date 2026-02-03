@@ -71,16 +71,28 @@ std::vector<std::pair<int, int>> bresenhamRayTrace(
     std::vector<std::pair<int, int>> cells;
 
     // TODO #2: Implement Bresenham's algorithm
-
-    // tart and end point in world
-
-
+    // start and end point in world
+    float end_point_x = origin_x + range * std::cos(theta);
+    float end_point_y = origin_y + range * std::sin(theta);
 
     // Convert to grid coordinates use grid.worldToGridX and grid. worldToGridY
-
+    int x0 = grid.worldToGridX(origin_x);
+    int y0 = grid.worldToGridY(origin_y);
+    int x1 = grid.worldToGridX(end_point_x);
+    int y1 = grid.worldToGridY(end_point_y);
 
     // Bresenham's algorithm
-
-
+    int dx = std::abs(x1 - x0);
+    int dy = std::abs(y1 - y0);
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+    int err = dx - dy;
+    while (true) {
+        cells.emplace_back(x0, y0);
+        if (x0 == x1 && y0 == y1) break;
+        int e2 = 2 * err;
+        if (e2 > -dy) { err -= dy; x0 += sx; }
+        if (e2 < dx)  { err += dx; y0 += sy; }
+    }
     return cells;
 }

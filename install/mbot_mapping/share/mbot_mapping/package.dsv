@@ -1,0 +1,5 @@
+source;share/mbot_mapping/local_setup.bash
+source;share/mbot_mapping/local_setup.dsv
+source;share/mbot_mapping/local_setup.ps1
+source;share/mbot_mapping/local_setup.sh
+source;share/mbot_mapping/local_setup.zsh

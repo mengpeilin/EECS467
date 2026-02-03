@@ -1,0 +1,51 @@
+[0.022s] Invoking command in '/home/mbot/mbot_ros_labs/mbot_labs_ws/build/mbot_mapping': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping -DCMAKE_INSTALL_PREFIX=/home/mbot/mbot_ros_labs/mbot_labs_ws/install/mbot_mapping
+[0.616s] -- The C compiler identification is GNU 13.3.0
+[1.007s] -- The CXX compiler identification is GNU 13.3.0
+[1.051s] -- Detecting C compiler ABI info
+[1.269s] -- Detecting C compiler ABI info - done
+[1.284s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.286s] -- Detecting C compile features
+[1.286s] -- Detecting C compile features - done
+[1.305s] -- Detecting CXX compiler ABI info
+[1.511s] -- Detecting CXX compiler ABI info - done
+[1.526s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.526s] -- Detecting CXX compile features
+[1.527s] -- Detecting CXX compile features - done
+[1.545s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.833s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[2.117s] -- Found rclcpp: 28.1.10 (/opt/ros/jazzy/share/rclcpp/cmake)
+[2.251s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[2.290s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[2.341s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.393s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.598s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.611s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[3.294s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[3.339s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[3.381s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[3.561s] -- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[3.685s] -- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)
+[3.738s] -- Found tf2: 0.36.12 (/opt/ros/jazzy/share/tf2/cmake)
+[3.754s] -- Found tf2_ros: 0.36.12 (/opt/ros/jazzy/share/tf2_ros/cmake)
+[4.051s] -- Found tf2_geometry_msgs: 0.36.12 (/opt/ros/jazzy/share/tf2_geometry_msgs/cmake)
+[4.100s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[4.103s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[4.103s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[4.281s] -- Configuring done (4.1s)
+[4.316s] -- Generating done (0.0s)
+[4.324s] -- Build files have been written to: /home/mbot/mbot_ros_labs/mbot_labs_ws/build/mbot_mapping
+[4.348s] Invoked command in '/home/mbot/mbot_ros_labs/mbot_labs_ws/build/mbot_mapping' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping -DCMAKE_INSTALL_PREFIX=/home/mbot/mbot_ros_labs/mbot_labs_ws/install/mbot_mapping
+[4.350s] Invoking command in '/home/mbot/mbot_ros_labs/mbot_labs_ws/build/mbot_mapping': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/mbot_labs_ws/build/mbot_mapping -- -j4 -l4
+[4.458s] [ 20%] [32mBuilding CXX object CMakeFiles/moving_laser_scan.dir/src/moving_laser_scan.cpp.o[0m
+[9.651s] [ 40%] [32m[1mLinking CXX static library libmoving_laser_scan.a[0m
+[10.682s] [ 40%] Built target moving_laser_scan
+[10.728s] [ 80%] [32mBuilding CXX object CMakeFiles/mapping_node.dir/src/mapping_node.cpp.o[0m
+[10.728s] [ 80%] [32mBuilding CXX object CMakeFiles/mapping_node.dir/src/mapping.cpp.o[0m
+[14.653s] [01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:[m[K In member function ‘[01m[Kvoid MappingNode::[01;32m[KupdateGrid[m[K(const MovingLaserScan&)[m[K’:
+[14.653s] [01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:145:33:[m[K [01;31m[Kerror: [m[K‘[01m[Kscan_msg[m[K’ was not declared in this scope
+[14.653s]   145 |                 if (ray.range < [01;31m[Kscan_msg[m[K->range_max) {
+[14.653s]       |                                 [01;31m[K^~~~~~~~[m[K
+[18.382s] gmake[2]: *** [CMakeFiles/mapping_node.dir/build.make:90: CMakeFiles/mapping_node.dir/src/mapping_node.cpp.o] Error 1
+[18.382s] gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/mapping_node.dir/all] Error 2
+[18.383s] gmake: *** [Makefile:146: all] Error 2
+[18.387s] Invoked command in '/home/mbot/mbot_ros_labs/mbot_labs_ws/build/mbot_mapping' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/mbot_labs_ws/build/mbot_mapping -- -j4 -l4

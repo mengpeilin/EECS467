@@ -51,29 +51,46 @@ nav2_msgs::msg::ParticleCloud ParticleFilter::systematicResample() const
 
     // TODO #2: Resample the particles
     // Step 1: Build cumulative distribution of weights
-    
+    const auto& particles = particle_cloud_.particles;
+    nav2_msgs::msg::ParticleCloud resampled;
+    resampled.particles.reserve(num_particles_);
 
+    std::vector<double> cdf;
+    cdf.reserve(num_particles_);
+    double cum = 0.0;
+    for (const auto& p : particles) {
+        cum += p.weight;
+        cdf.push_back(cum);
+    }
 
     // Step 2: Handle edge case (if all particles have zero weight?)
-    
-
-
+    if (cum <= 0.0 || particles.empty()) {
+        const double w_uniform = (num_particles_ > 0) ? (1.0 / static_cast<double>(num_particles_)) : 0.0;
+        for (size_t i = 0; i < particles.size(); ++i) {
+            nav2_msgs::msg::Particle q = particles[i];
+            q.weight = w_uniform;
+            resampled.particles.push_back(std::move(q));
+        }
+        return resampled;
+    }
 
     // Step 3: Normalize to probability [0, 1]
-    
-
+    for (auto& v : cdf) v /= cum;
 
     // Step 4: Draw N equally-spaced samples and copy particles. 
     //You may find  std::uniform_real_distribution<double> unif() helpful.
-    nav2_msgs::msg::ParticleCloud resampled;
-    resampled.particles.reserve(num_particles_);
-    //(fill in code below)
+    const double inv_N = 1.0 / static_cast<double>(num_particles_);
+    double r = 0.5 * inv_N;
 
+    size_t i = 0;
+    for (size_t m = 0; m < num_particles_; ++m) {
+        const double u = r + m * inv_N;
+        while (i + 1 < cdf.size() && u > cdf[i]) ++i;
 
-
-
-
-   
+        nav2_msgs::msg::Particle q = particles[i];
+        q.weight = inv_N;
+        resampled.particles.push_back(std::move(q));
+    }   
     return resampled;
 }
 
@@ -123,12 +140,33 @@ geometry_msgs::msg::Pose ParticleFilter::computeBestEstimate(const nav2_msgs::ms
 
     // TODO #5: Compute the best estimate pose
     // Loop through all p in cloud.particles. Fill in x, y, cos_sum, sin_sum
+    double sum_w = 0.0;
+    for (const auto& p : cloud.particles) {
+        const double w = p.weight;
+        const double theta = yawFromQuaternion(p.pose.orientation);
+        x       += w * p.pose.position.x;
+        y       += w * p.pose.position.y;
+        cos_sum += w * std::cos(theta);
+        sin_sum += w * std::sin(theta);
+        sum_w   += w;
+    }
 
-
-
-
-
-
+    if (sum_w > 0.0) {
+        x       /= sum_w;
+        y       /= sum_w;
+        cos_sum /= sum_w;
+        sin_sum /= sum_w;
+    } else if (!cloud.particles.empty()) {
+        const double inv_N = 1.0 / static_cast<double>(cloud.particles.size());
+        x = y = cos_sum = sin_sum = 0.0;
+        for (const auto& p : cloud.particles) {
+            const double theta = yawFromQuaternion(p.pose.orientation);
+            x       += inv_N * p.pose.position.x;
+            y       += inv_N * p.pose.position.y;
+            cos_sum += inv_N * std::cos(theta);
+            sin_sum += inv_N * std::sin(theta);
+        }
+    }
 
     geometry_msgs::msg::Pose est;
     est.position.x = x;

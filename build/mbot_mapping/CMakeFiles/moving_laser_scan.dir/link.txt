@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmoving_laser_scan.a CMakeFiles/moving_laser_scan.dir/src/moving_laser_scan.cpp.o
+/usr/bin/ranlib libmoving_laser_scan.a

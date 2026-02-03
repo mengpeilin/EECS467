@@ -1,0 +1,26 @@
+[ 40%] Built target moving_laser_scan
+[ 60%] [32mBuilding CXX object CMakeFiles/mapping_node.dir/src/mapping_node.cpp.o[0m
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:194:2:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ at end of input
+  194 | }
+      |  [01;31m[K^[m[K
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:15:1:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+   15 | [01;36m[K{[m[K
+      | [01;36m[K^[m[K
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:[m[K In constructor ‘[01m[KMappingNode::[01;32m[KMappingNode[m[K()[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:34:111:[m[K [01;31m[Kerror: [m[K‘[01m[KpublishMap[m[K’ is not a member of ‘[01m[KMappingNode[m[K’
+   34 |         timer_ = create_wall_timer(std::chrono::duration<double>(1.0 / publish_rate), std::bind(&MappingNode::[01;31m[KpublishMap[m[K, this));
+      |                                                                                                               [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:[m[K In member function ‘[01m[Kvoid MappingNode::[01;32m[KupdateGrid[m[K(const MovingLaserScan&)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:160:5:[m[K [01;31m[Kerror: [m[Ka function-definition is not allowed here before ‘[01m[K{[m[K’ token
+  160 |     [01;31m[K{[m[K
+      |     [01;31m[K^[m[K
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:169:5:[m[K [01;31m[Kerror: [m[Ka function-definition is not allowed here before ‘[01m[K{[m[K’ token
+  169 |     [01;31m[K{[m[K
+      |     [01;31m[K^[m[K
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:[m[K At global scope:
+[01m[K/home/mbot/mbot_ros_labs/mbot_labs_ws/mbot_mapping/src/mapping_node.cpp:194:2:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id at end of input
+  194 | }
+      |  [01;31m[K^[m[K
+gmake[2]: *** [CMakeFiles/mapping_node.dir/build.make:90: CMakeFiles/mapping_node.dir/src/mapping_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/mapping_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

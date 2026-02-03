@@ -58,9 +58,8 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
 
     // TODO #2: Compute uniform probability distribution over range
         // Hint: p_uniform = 1.0 / (scan.range_max - scan.range_min)
-    const double p_uniform = 0.0;
-
-
+    const double range_span = scan.range_max - scan.range_min;
+    const double p_uniform = (range_span > 0.0) ? (1.0 / range_span) : 1e-9;
 
     double log_sum = 0.0;
     int used = 0;
@@ -86,8 +85,12 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
         // Hint: 
         //       Compute Gaussian p_hit = exp(-(d²) / (2σ²)) where σ = sigma_hit_
         //       Then mixture model p = Z_HIT * p_hit + Z_RAND * p_uniform
-        const double p_hit = 0.0;
-        const double p = 0.0;
+        constexpr double Z_HIT  = 0.95;
+        constexpr double Z_RAND = 1.0 - Z_HIT;
+        const double d = static_cast<double>(distance_to_obstacle);
+        const double p_hit = std::exp(-(d * d) * inv_two_sigma2);
+        double p = Z_HIT * p_hit + Z_RAND * p_uniform;
+        p = std::max(p, 1e-12);
 
 
 
