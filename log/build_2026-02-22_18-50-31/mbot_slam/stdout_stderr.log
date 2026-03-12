@@ -1,0 +1,69 @@
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found rclcpp: 28.1.10 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+-- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)
+-- Found nav2_msgs: 1.3.7 (/opt/ros/jazzy/share/nav2_msgs/cmake)
+-- Found tf2: 0.36.12 (/opt/ros/jazzy/share/tf2/cmake)
+-- Found tf2_ros: 0.36.12 (/opt/ros/jazzy/share/tf2_ros/cmake)
+-- Found tf2_geometry_msgs: 0.36.12 (/opt/ros/jazzy/share/tf2_geometry_msgs/cmake)
+-- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+-- Found ament_lint_auto: 0.17.2 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /home/mbot/mbot_ros_labs/src/mbot_slam/include
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done (1.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/mbot/mbot_ros_labs/src/build/mbot_slam
+[ 12%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/sensor_model.cpp.o[0m
+[ 25%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/action_model.cpp.o[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/particle_filter.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/mapping.cpp.o[0m
+[ 62%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/moving_laser_scan.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/obstacle_distance_grid.cpp.o[0m
+[ 87%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/slam_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable slam_node[0m
+[100%] Built target slam_node
+-- Install configuration: ""
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/sensor_model.hpp
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/slam_utils.hpp
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/action_model.hpp
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/obstacle_distance_grid.hpp
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/moving_laser_scan.hpp
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/mapping.hpp
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/particle_filter.hpp
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/rviz
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/rviz/slam.rviz
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/lib/mbot_slam/slam_node
+-- Set non-toolchain portion of runtime path of "/home/mbot/mbot_ros_labs/src/install/mbot_slam/lib/mbot_slam/slam_node" to ""
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam//maps
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam//maps/.placeholder
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam//maps/map_name.pgm
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam//maps/map_name.yaml
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/ament_index/resource_index/package_run_dependencies/mbot_slam
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/ament_index/resource_index/parent_prefix_path/mbot_slam
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/ament_prefix_path.sh
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/ament_prefix_path.dsv
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/path.sh
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/path.dsv
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.bash
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.sh
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.zsh
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.dsv
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/package.dsv
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/ament_index/resource_index/packages/mbot_slam
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/cmake/mbot_slamConfig.cmake
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/cmake/mbot_slamConfig-version.cmake
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/package.xml

@@ -1,14 +1,11 @@
 #include "sensor_model.hpp"
-#include "obstacle_distance_grid.hpp"
-#include "localization_utils.hpp"
-
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2/LinearMath/Matrix3x3.h>
+#include "slam_utils.hpp"
 
 #include <cmath>
 #include <limits>
+#include <iostream>
 
-namespace mbot_localization
+namespace mbot_slam
 {
 
 SensorModel::SensorModel()
@@ -58,7 +55,7 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
 
     // TODO #2: Compute uniform probability distribution over range
         // Hint: p_uniform = 1.0 / (scan.range_max - scan.range_min)
-    const double p_uniform = 0.0;
+    const double p_uniform = 1.0 / std::max(1e-3, static_cast<double>(scan.range_max - scan.range_min));
 
 
 
@@ -86,15 +83,9 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
         // Hint: 
         //       Compute Gaussian p_hit = exp(-(d²) / (2σ²)) where σ = sigma_hit_
         //       Then mixture model p = Z_HIT * p_hit + Z_RAND * p_uniform
-        const double p_hit = 0.0;
-        const double p = 0.0;
-
-
-
-
-
-
-
+        const double distance_clamped = std::min<double>(distance_to_obstacle, 3.0 * sigma_hit_);
+        const double p_hit = std::exp(-(distance_clamped * distance_clamped) * inv_two_sigma2);
+        const double p = std::max(Z_HIT * p_hit + Z_RAND * p_uniform, 1e-12);
         log_sum += std::log(p);
         ++used;
     }
@@ -104,5 +95,5 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
     return std::max(std::exp(log_sum / used), 1e-9);
 }
 
-} // namespace mbot_localization
+} // namespace mbot_slam
 

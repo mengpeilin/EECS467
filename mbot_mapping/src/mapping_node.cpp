@@ -28,14 +28,17 @@ public:
         scan_sub_ = create_subscription<sensor_msgs::msg::LaserScan>(
             "/scan", 10, std::bind(&MappingNode::scanCallback, this, std::placeholders::_1));
 
-        map_pub_ = create_publisher<nav_msgs::msg::OccupancyGrid>("/map", rclcpp::QoS(1).transient_local());
-
+        // map_pub_ = create_publisher<nav_msgs::msg::OccupancyGrid>("/map", rclcpp::QoS(1).transient_local());
+        map_pub_ = create_publisher<nav_msgs::msg::OccupancyGrid>("/map_bresenham", rclcpp::QoS(1).transient_local());
+        map_pub_step_ = create_publisher<nav_msgs::msg::OccupancyGrid>("/map_step", rclcpp::QoS(1).transient_local());
         double publish_rate = 1.0; // Hz
         timer_ = create_wall_timer(std::chrono::duration<double>(1.0 / publish_rate), std::bind(&MappingNode::publishMap, this));
     }
 
 private:
     OccupancyGrid grid_;
+    OccupancyGrid grid_step_;
+    rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr map_pub_step_;
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_sub_;
     rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr map_pub_;
     rclcpp::TimerBase::SharedPtr timer_;
@@ -119,33 +122,39 @@ private:
         return pose_end;
     }
 
-    void updateGrid(const MovingLaserScan& scan)
+    nav_msgs::msg::OccupancyGrid createMapMsg(const OccupancyGrid& grid, std::string frame_id)
     {
-        for (const auto& ray : scan)
-        {
-            auto ray_cells = bresenhamRayTrace(
-                ray.origin.x, ray.origin.y, ray.theta, ray.range, grid_);
-                
-            if (!ray_cells.empty()) {
+        nav_msgs::msg::OccupancyGrid msg;
+        msg.header.frame_id = frame_id;
+        msg.header.stamp = this->now();
 
-                // TODO #3: update the grid based on ray_cells here
-                // We have a vector of cells along the ray, how to mark them?
-                // Hints: use grid_.markCellFree(x_idx, y_idx) and grid_.markCellOccupied(x_idx, y_idx)
-                
-                // TODO 3.1 - loop through all ray_cells. Update cells as free along the ray, excluding the last cell
-                for (size_t i = 0; i < ray_cells.size() - 1; ++i) {
-                    int x_idx = ray_cells[i].first;
-                    int y_idx = ray_cells[i].second;
-                    grid_.markCellFree(x_idx, y_idx);
-                }
+        msg.info.resolution = grid.getResolution();
+        msg.info.width = grid.getWidth();
+        msg.info.height = grid.getHeight();
+        msg.info.origin.position.x = grid.getOriginX();
+        msg.info.origin.position.y = grid.getOriginY();
+        msg.info.origin.position.z = 0.0;
+        msg.info.origin.orientation.w = 1.0;
 
-                // TODO 3.2 - Update the last cell only if there was a valid hit
-                int last_x_idx = ray_cells.back().first;
-                int last_y_idx = ray_cells.back().second;
-                if (ray.range < latest_scan_->range_max) {
-                    grid_.markCellOccupied(last_x_idx, last_y_idx);
-                }                
-            }
+        msg.data = grid.getOccupancyGrid();
+        return msg;
+    }
+    
+    void updateGrid(const MovingLaserScan& scan) {
+        for (const auto& ray : scan) {
+            auto cells_b = bresenhamRayTrace(ray.origin.x, ray.origin.y, ray.theta, ray.range, grid_);
+            updateSingleGrid(grid_, cells_b, ray.range);
+            auto cells_s = divideAndStepRayTrace(ray.origin.x, ray.origin.y, ray.theta, ray.range, grid_step_);
+            updateSingleGrid(grid_step_, cells_s, ray.range);
+        }
+    }
+    void updateSingleGrid(OccupancyGrid& g, const std::vector<std::pair<int, int>>& cells, float range) {
+        if (cells.empty()) return;
+        for (size_t i = 0; i < cells.size() - 1; ++i) {
+            g.markCellFree(cells[i].first, cells[i].second);
+        }
+        if (range < latest_scan_->range_max) {
+            g.markCellOccupied(cells.back().first, cells.back().second);
         }
     }
     
@@ -158,22 +167,34 @@ private:
         return static_cast<float>(yaw);
     }
 
+    // void publishMap()
+    // {
+    //     nav_msgs::msg::OccupancyGrid map_msg;
+    //     map_msg.header.frame_id = "map";
+    //     map_msg.header.stamp = this->now();
+    //     auto msg_b = createMapMsg(grid_, "/map_bresenham");
+    //     map_pub_->publish(msg_b);
+
+    //     auto msg_s = createMapMsg(grid_step_, "/map_step");
+    //     map_pub_step_->publish(msg_s);
+    //     map_msg.info.resolution = grid_.getResolution();
+    //     map_msg.info.width = grid_.getWidth();
+    //     map_msg.info.height = grid_.getHeight();
+    //     map_msg.info.origin.position.x = grid_.getOriginX();
+    //     map_msg.info.origin.position.y = grid_.getOriginY();
+    //     map_msg.info.origin.position.z = 0;
+    //     map_msg.info.origin.orientation.w = 1.0;
+
+    //     map_msg.data = grid_.getOccupancyGrid();
+    //     map_pub_->publish(map_msg);
+    // }
     void publishMap()
     {
-        nav_msgs::msg::OccupancyGrid map_msg;
-        map_msg.header.frame_id = "map";
-        map_msg.header.stamp = this->now();
+        auto msg_b = createMapMsg(grid_, "map");
+        map_pub_->publish(msg_b);
 
-        map_msg.info.resolution = grid_.getResolution();
-        map_msg.info.width = grid_.getWidth();
-        map_msg.info.height = grid_.getHeight();
-        map_msg.info.origin.position.x = grid_.getOriginX();
-        map_msg.info.origin.position.y = grid_.getOriginY();
-        map_msg.info.origin.position.z = 0;
-        map_msg.info.origin.orientation.w = 1.0;
-
-        map_msg.data = grid_.getOccupancyGrid();
-        map_pub_->publish(map_msg);
+        auto msg_s = createMapMsg(grid_step_, "map");
+        map_pub_step_->publish(msg_s);
     }
 };
 
@@ -185,3 +206,4 @@ int main(int argc, char** argv)
     rclcpp::shutdown();
     return 0;
 }
+

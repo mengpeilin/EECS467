@@ -96,3 +96,26 @@ std::vector<std::pair<int, int>> bresenhamRayTrace(
     }
     return cells;
 }
+
+std::vector<std::pair<int, int>> divideAndStepRayTrace(
+    float origin_x, float origin_y, float theta, float range, const OccupancyGrid& grid)
+{
+    std::vector<std::pair<int, int>> cells;
+    float res = grid.getResolution();
+    float step_size = res * 0.5f;
+    int num_steps = static_cast<int>(range / step_size);
+
+    for (int i = 0; i <= num_steps; ++i) {
+        float d = std::min(static_cast<float>(i) * step_size, range);
+        float px = origin_x + d * std::cos(theta);
+        float py = origin_y + d * std::sin(theta);
+        
+        int gx = grid.worldToGridX(px);
+        int gy = grid.worldToGridY(py);
+        
+        if (cells.empty() || cells.back().first != gx || cells.back().second != gy) {
+            cells.emplace_back(gx, gy);
+        }
+    }
+    return cells;
+}

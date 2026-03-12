@@ -1,0 +1,75 @@
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:[m[K In member function ‘[01m[Kvoid mbot_slam::OccupancyGrid::[01;32m[KmarkCellOccupied[m[K(int, int)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:20:25:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   20 |     if (idx >= 0 && [01;35m[Kidx < data_.size()[m[K)
+      |                     [01;35m[K~~~~^~~~~~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:[m[K In member function ‘[01m[Kvoid mbot_slam::OccupancyGrid::[01;32m[KmarkCellFree[m[K(int, int)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:31:25:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   31 |     if (idx >= 0 && [01;35m[Kidx < data_.size()[m[K)
+      |                     [01;35m[K~~~~^~~~~~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:[m[K In function ‘[01m[Kstd::vector<std::pair<int, int> > mbot_slam::[01;32m[KbresenhamRayTrace[m[K(float, float, float, float, const OccupancyGrid&)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:83:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kx0[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   83 |     int [01;35m[Kx0[m[K = grid.worldToGridX(origin_x);
+      |         [01;35m[K^~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:84:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ky0[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   84 |     int [01;35m[Ky0[m[K = grid.worldToGridY(origin_y);
+      |         [01;35m[K^~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:85:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kx1[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   85 |     int [01;35m[Kx1[m[K = grid.worldToGridX(end_x);
+      |         [01;35m[K^~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:86:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ky1[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   86 |     int [01;35m[Ky1[m[K = grid.worldToGridY(end_y);
+      |         [01;35m[K^~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/sensor_model.cpp:[m[K In member function ‘[01m[Kdouble mbot_slam::SensorModel::[01;32m[Klikelihood[m[K(const geometry_msgs::msg::Pose&, const sensor_msgs::msg::LaserScan&, const ObstacleDistanceGrid&) const[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/sensor_model.cpp:69:22:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kp_uniform[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   69 |         const double [01;35m[Kp_uniform[m[K = 0.0;
+      |                      [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/sensor_model.cpp:75:22:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kp_hit[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   75 |         const double [01;35m[Kp_hit[m[K = 0.0;
+      |                      [01;35m[K^~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:[m[K In member function ‘[01m[Kbool mbot_slam::ActionModel::[01;32m[KprocessOdometry[m[K(const nav_msgs::msg::Odometry&)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:25:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kdx[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   25 |     const double [01;35m[Kdx[m[K = odom.pose.pose.position.x - prev_odom_.pose.pose.position.x;
+      |                  [01;35m[K^~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:26:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kdy[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   26 |     const double [01;35m[Kdy[m[K = odom.pose.pose.position.y - prev_odom_.pose.pose.position.y;
+      |                  [01;35m[K^~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:27:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ktheta_prev[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   27 |     const double [01;35m[Ktheta_prev[m[K = yawFromQuaternion(prev_odom_.pose.pose.orientation);
+      |                  [01;35m[K^~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:28:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ktheta_curr[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   28 |     const double [01;35m[Ktheta_curr[m[K = yawFromQuaternion(odom.pose.pose.orientation);
+      |                  [01;35m[K^~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:[m[K In member function ‘[01m[Kgeometry_msgs::msg::Pose mbot_slam::ActionModel::[01;32m[KpropagateParticle[m[K(const geometry_msgs::msg::Pose&)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:64:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ksampled_rot1[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   64 |     double [01;35m[Ksampled_rot1[m[K  = 0.0;
+      |            [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:65:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ksampled_trans[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   65 |     double [01;35m[Ksampled_trans[m[K = 0.0;
+      |            [01;35m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:66:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ksampled_rot2[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   66 |     double [01;35m[Ksampled_rot2[m[K  = 0.0;
+      |            [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/action_model.cpp:55:89:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kpose[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   55 | geometry_msgs::msg::Pose ActionModel::propagateParticle([01;35m[Kconst geometry_msgs::msg::Pose& pose[m[K)
+      |                                                         [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/moving_laser_scan.cpp:[m[K In function ‘[01m[Kgeometry_msgs::msg::Point[01;32m[K linearInterpolatePoint[m[K(const geometry_msgs::msg::Point&, const geometry_msgs::msg::Point&, float)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/moving_laser_scan.cpp:9:90:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ka[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+    9 | inline geometry_msgs::msg::Point linearInterpolatePoint([01;35m[Kconst geometry_msgs::msg::Point& a[m[K,
+      |                                                         [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/moving_laser_scan.cpp:10:77:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kb[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   10 |                                            [01;35m[Kconst geometry_msgs::msg::Point& b[m[K,
+      |                                            [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/moving_laser_scan.cpp:11:50:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kt[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   11 |                                            [01;35m[Kfloat t[m[K)
+      |                                            [01;35m[K~~~~~~^[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/moving_laser_scan.cpp:[m[K In member function ‘[01m[Kvoid MovingLaserScan::[01;32m[KinterpolateRay[m[K(const sensor_msgs::msg::LaserScan&, const Pose&, const Pose&)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/moving_laser_scan.cpp:39:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kdelta_yaw[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   39 |     double [01;35m[Kdelta_yaw[m[K = mbot_slam::wrapToPi(yaw_end - yaw_start);
+      |            [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/particle_filter.cpp:[m[K In member function ‘[01m[Kgeometry_msgs::msg::Pose mbot_slam::ParticleFilter::[01;32m[KcomputeBestEstimate[m[K(const nav2_msgs::msg::ParticleCloud&) const[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/particle_filter.cpp:106:99:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kcloud[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  106 | geometry_msgs::msg::Pose ParticleFilter::computeBestEstimate([01;35m[Kconst nav2_msgs::msg::ParticleCloud& cloud[m[K) const
+      |                                                              [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K
+gmake[2]: *** [CMakeFiles/slam_node.dir/build.make:160: CMakeFiles/slam_node.dir/src/slam_node.cpp.o] Interrupt
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/slam_node.dir/all] Interrupt
+gmake: *** [Makefile:146: all] Interrupt

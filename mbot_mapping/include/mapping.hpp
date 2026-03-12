@@ -39,3 +39,6 @@ private:
 // Bresenham-style ray tracing from sensor origin to hit
 std::vector<std::pair<int, int>> bresenhamRayTrace(
     float origin_x, float origin_y, float theta, float range, const OccupancyGrid& grid);
+// mapping.hpp
+std::vector<std::pair<int, int>> divideAndStepRayTrace(
+    float origin_x, float origin_y, float theta, float range, const OccupancyGrid& grid);

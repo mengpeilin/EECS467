@@ -19,11 +19,15 @@ public:
         const geometry_msgs::msg::Pose2D &robot_pose,
         const ObstacleDistanceGrid &dist_grid);
 
+    // Access last-detected frontier data for visualization
+    const std::vector<geometry_msgs::msg::Point>& getLastRawFrontiers() const { return last_raw_frontiers_; }
+    const std::vector<geometry_msgs::msg::Point>& getLastClusteredFrontiers() const { return last_clustered_frontiers_; }
+    
     // Minimum distance (meters) to consider a frontier
-    double min_frontier_distance = 0.1;
+    double min_frontier_distance = 0.05;
 
     // Clearance (meters) required around goal positions from obstacles
-    double goal_clearance = 0.15;
+    double goal_clearance = 0.02;
 
     // Distance (meters) for clustering nearby frontiers
     double frontier_cluster_distance = 0.15;
@@ -43,6 +47,10 @@ private:
     geometry_msgs::msg::Point gridToWorld(
         int x, int y,
         const ObstacleDistanceGrid &dist_grid);
+    
+    // Cached for visualization
+    std::vector<geometry_msgs::msg::Point> last_raw_frontiers_;
+    std::vector<geometry_msgs::msg::Point> last_clustered_frontiers_;
 };
 
 } // namespace mbot_nav

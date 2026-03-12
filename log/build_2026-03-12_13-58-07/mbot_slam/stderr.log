@@ -1,0 +1,12 @@
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:[m[K In member function ‘[01m[Kvoid mbot_slam::OccupancyGrid::[01;32m[KmarkCellOccupied[m[K(int, int)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:19:25:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   19 |     if (idx >= 0 && [01;35m[Kidx < data_.size()[m[K)
+      |                     [01;35m[K~~~~^~~~~~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:[m[K In member function ‘[01m[Kvoid mbot_slam::OccupancyGrid::[01;32m[KmarkCellFree[m[K(int, int)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:29:25:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   29 |     if (idx >= 0 && [01;35m[Kidx < data_.size()[m[K)
+      |                     [01;35m[K~~~~^~~~~~~~~~~~~~[m[K
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/particle_filter.cpp:[m[K In member function ‘[01m[Kgeometry_msgs::msg::Pose mbot_slam::ParticleFilter::[01;32m[KcomputeBestEstimate[m[K(const nav2_msgs::msg::ParticleCloud&) const[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/particle_filter.cpp:130:99:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kcloud[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  130 | geometry_msgs::msg::Pose ParticleFilter::computeBestEstimate([01;35m[Kconst nav2_msgs::msg::ParticleCloud& cloud[m[K) const
+      |                                                              [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K

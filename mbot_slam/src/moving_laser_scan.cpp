@@ -82,7 +82,9 @@ void MovingLaserScan::interpolateRay(const sensor_msgs::msg::LaserScan& scan,
         InterpolatedRay ray;
 
         // TODO #1: Compute ray.origin, ray.theta, and ray.range (after interpolation). Use linearInterpolatePoint() function.
- 
+        ray.origin = linearInterpolatePoint(start_pose.position, end_pose.position, t);  // world-frame origin at beam time
+        ray.theta  = scan_angle + yaw + M_PI;  // world-frame heading (base yaw + scan angle + pi for backward lidar)
+        ray.range  = range;
 
 
         rays_.push_back(ray);

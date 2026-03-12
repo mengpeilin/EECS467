@@ -12,6 +12,7 @@
 #include "frontier_explorer.hpp"
 #include "astar.hpp"
 #include "obstacle_distance_grid.hpp"
+#include "visualization_msgs/msg/marker_array.hpp"
 
 #include <memory>
 #include <optional>
@@ -28,6 +29,7 @@ private:
     void planPath();
     void publishWaypoints(const mbot_interfaces::msg::Pose2DArray& path);
     void publishPath(const mbot_interfaces::msg::Pose2DArray& path);
+    void publishFrontierMarkers();
 
     // Pose retrieval
     bool getRobotPose(geometry_msgs::msg::Pose2D &pose);
@@ -41,11 +43,12 @@ private:
     // Publishers
     rclcpp::Publisher<mbot_interfaces::msg::Pose2DArray>::SharedPtr waypoints_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr path_pub_;
-
+    rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr frontier_pub_;
+    
     // Data
     nav_msgs::msg::OccupancyGrid::SharedPtr latest_map_;
     std::optional<geometry_msgs::msg::Pose2D> current_goal_;
-    double goal_reached_threshold_ = 0.15;
+    double goal_reached_threshold_ = 0.30;
 
     // Planners
     mbot_nav::AStarPlanner astar_planner_;

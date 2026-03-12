@@ -11,6 +11,9 @@ ExplorationNode::ExplorationNode()
     path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
         "/planned_path", 10);
 
+    frontier_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>(
+        "/frontier_markers", 10);
+
     // Subscriptions
     map_sub_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(
         "/map",
@@ -76,6 +79,7 @@ void ExplorationNode::timerCallback()
         } else {
             // Still navigating to current goal - replan with current robot pose
             planPath();
+            publishFrontierMarkers();
             return;
         }
     }
@@ -90,6 +94,7 @@ void ExplorationNode::timerCallback()
         } else {
             // Still returning - replan with current robot pose
             planPath();
+            publishFrontierMarkers();
         }
         return;  // Stay idle after returning to origin
     }
@@ -97,6 +102,7 @@ void ExplorationNode::timerCallback()
     //Find a valid frontier, we call selectGoal() here
     // Try to find a frontier goal
     auto goal = frontier_explorer_.selectGoal(robot_pose, dist_grid_);
+    publishFrontierMarkers();
     if (!goal) {
         // No frontier found - increment counter and give it another chance
         no_frontier_count_++;
@@ -182,6 +188,86 @@ void ExplorationNode::publishPath(const mbot_interfaces::msg::Pose2DArray& path)
     }
 
     path_pub_->publish(path_msg);
+}
+
+void ExplorationNode::publishFrontierMarkers()
+{
+    visualization_msgs::msg::MarkerArray marker_array;
+
+    // Marker 0: all raw frontier cells as a POINTS cloud (cyan)
+    {
+        visualization_msgs::msg::Marker raw_marker;
+        raw_marker.header.frame_id = "map";
+        raw_marker.header.stamp = this->now();
+        raw_marker.ns = "frontier_raw";
+        raw_marker.id = 0;
+        raw_marker.type = visualization_msgs::msg::Marker::POINTS;
+        raw_marker.action = visualization_msgs::msg::Marker::ADD;
+        raw_marker.pose.orientation.w = 1.0;
+        raw_marker.scale.x = 0.05;
+        raw_marker.scale.y = 0.05;
+        raw_marker.color.r = 0.0f;
+        raw_marker.color.g = 1.0f;
+        raw_marker.color.b = 1.0f;
+        raw_marker.color.a = 0.8f;
+        raw_marker.lifetime = rclcpp::Duration(2, 0);  // expire after 2s so stale frontiers clear
+
+        for (const auto& pt : frontier_explorer_.getLastRawFrontiers()) {
+            raw_marker.points.push_back(pt);
+        }
+        marker_array.markers.push_back(raw_marker);
+    }
+
+    // Marker 1: clustered frontier centroids as green spheres
+    {
+        visualization_msgs::msg::Marker cluster_marker;
+        cluster_marker.header.frame_id = "map";
+        cluster_marker.header.stamp = this->now();
+        cluster_marker.ns = "frontier_clusters";
+        cluster_marker.id = 1;
+        cluster_marker.type = visualization_msgs::msg::Marker::SPHERE_LIST;
+        cluster_marker.action = visualization_msgs::msg::Marker::ADD;
+        cluster_marker.pose.orientation.w = 1.0;
+        cluster_marker.scale.x = 0.12;
+        cluster_marker.scale.y = 0.12;
+        cluster_marker.scale.z = 0.12;
+        cluster_marker.color.r = 0.0f;
+        cluster_marker.color.g = 1.0f;
+        cluster_marker.color.b = 0.0f;
+        cluster_marker.color.a = 1.0f;
+        cluster_marker.lifetime = rclcpp::Duration(2, 0);
+
+        for (const auto& pt : frontier_explorer_.getLastClusteredFrontiers()) {
+            cluster_marker.points.push_back(pt);
+        }
+        marker_array.markers.push_back(cluster_marker);
+    }
+
+    // Marker 2: current goal as a large yellow sphere
+    if (current_goal_) {
+        visualization_msgs::msg::Marker goal_marker;
+        goal_marker.header.frame_id = "map";
+        goal_marker.header.stamp = this->now();
+        goal_marker.ns = "frontier_goal";
+        goal_marker.id = 2;
+        goal_marker.type = visualization_msgs::msg::Marker::SPHERE;
+        goal_marker.action = visualization_msgs::msg::Marker::ADD;
+        goal_marker.pose.position.x = current_goal_->x;
+        goal_marker.pose.position.y = current_goal_->y;
+        goal_marker.pose.position.z = 0.0;
+        goal_marker.pose.orientation.w = 1.0;
+        goal_marker.scale.x = 0.2;
+        goal_marker.scale.y = 0.2;
+        goal_marker.scale.z = 0.2;
+        goal_marker.color.r = 1.0f;
+        goal_marker.color.g = 1.0f;
+        goal_marker.color.b = 0.0f;
+        goal_marker.color.a = 1.0f;
+        goal_marker.lifetime = rclcpp::Duration(2, 0);
+        marker_array.markers.push_back(goal_marker);
+    }
+
+    frontier_pub_->publish(marker_array);
 }
 
 bool ExplorationNode::getRobotPose(geometry_msgs::msg::Pose2D &pose)

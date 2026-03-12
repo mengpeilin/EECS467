@@ -1,0 +1,222 @@
+[0.331s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'mbot_localization']
+[0.331s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['mbot_localization'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, meson_args=[], ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffff8c92aba0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff8c92a7e0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff8c92a7e0>>)
+[0.398s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.398s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.398s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.398s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.398s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.398s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.399s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/mbot/mbot_ros_labs/src'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.471s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'meson', 'python']
+[0.471s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.471s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'meson'
+[0.471s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.471s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.471s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.471s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extensions ['ignore', 'ignore_ament_install']
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extension 'ignore'
+[0.472s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extension 'ignore_ament_install'
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extensions ['colcon_pkg']
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extension 'colcon_pkg'
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extensions ['colcon_meta']
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extension 'colcon_meta'
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extensions ['ros']
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_localization) by extension 'ros'
+[0.476s] DEBUG:colcon.colcon_core.package_identification:Package 'mbot_localization' with type 'ros.ament_cmake' and name 'mbot_localization'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extensions ['ignore', 'ignore_ament_install']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extension 'ignore'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extension 'ignore_ament_install'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extensions ['colcon_pkg']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extension 'colcon_pkg'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extensions ['colcon_meta']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extension 'colcon_meta'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extensions ['ros']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_mapping) by extension 'ros'
+[0.478s] DEBUG:colcon.colcon_core.package_identification:Package 'mbot_mapping' with type 'ros.ament_cmake' and name 'mbot_mapping'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extensions ['ignore', 'ignore_ament_install']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extension 'ignore'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extension 'ignore_ament_install'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extensions ['colcon_pkg']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extension 'colcon_pkg'
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extensions ['colcon_meta']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extension 'colcon_meta'
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extensions ['ros']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_nav) by extension 'ros'
+[0.480s] DEBUG:colcon.colcon_core.package_identification:Package 'mbot_nav' with type 'ros.ament_cmake' and name 'mbot_nav'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extensions ['ignore', 'ignore_ament_install']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'ignore'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'ignore_ament_install'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extensions ['colcon_pkg']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'colcon_pkg'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extensions ['colcon_meta']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'colcon_meta'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extensions ['ros']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'ros'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extensions ['cmake', 'meson', 'python']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'cmake'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'meson'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'python'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extensions ['python_setup_py']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags) by extension 'python_setup_py'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extensions ['ignore', 'ignore_ament_install']
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'ignore'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'ignore_ament_install'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extensions ['colcon_pkg']
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'colcon_pkg'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extensions ['colcon_meta']
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'colcon_meta'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extensions ['ros']
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'ros'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extensions ['cmake', 'meson', 'python']
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'cmake'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'meson'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'python'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extensions ['python_setup_py']
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/maze1) by extension 'python_setup_py'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extensions ['ignore', 'ignore_ament_install']
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'ignore'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'ignore_ament_install'
+[0.481s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extensions ['colcon_pkg']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'colcon_pkg'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extensions ['colcon_meta']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'colcon_meta'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extensions ['ros']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'ros'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extensions ['cmake', 'meson', 'python']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'cmake'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'meson'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'python'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extensions ['python_setup_py']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_rosbags/slam_test) by extension 'python_setup_py'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extensions ['ignore', 'ignore_ament_install']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extension 'ignore'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extension 'ignore_ament_install'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extensions ['colcon_pkg']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extension 'colcon_pkg'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extensions ['colcon_meta']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extension 'colcon_meta'
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extensions ['ros']
+[0.482s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_setpoint) by extension 'ros'
+[0.484s] DEBUG:colcon.colcon_core.package_identification:Package 'mbot_setpoint' with type 'ros.ament_cmake' and name 'mbot_setpoint'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extensions ['ignore', 'ignore_ament_install']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extension 'ignore'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extension 'ignore_ament_install'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extensions ['colcon_pkg']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extension 'colcon_pkg'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extensions ['colcon_meta']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extension 'colcon_meta'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extensions ['ros']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(mbot_slam) by extension 'ros'
+[0.485s] DEBUG:colcon.colcon_core.package_identification:Package 'mbot_slam' with type 'ros.ament_cmake' and name 'mbot_slam'
+[0.485s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.486s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.486s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.486s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.486s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.506s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'mbot_mapping' in 'mbot_mapping'
+[0.506s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'mbot_nav' in 'mbot_nav'
+[0.506s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'mbot_setpoint' in 'mbot_setpoint'
+[0.506s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'mbot_slam' in 'mbot_slam'
+[0.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.510s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 5 installed packages in /home/mbot/mbot_ros_labs/install
+[0.511s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 7 installed packages in /home/mbot/mbot_ws/install
+[0.511s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 3 installed packages in /home/mbot/microros_ws/install
+[0.514s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 399 installed packages in /opt/ros/jazzy
+[0.515s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.612s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'cmake_args' from command line to 'None'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'cmake_target' from command line to 'None'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'cmake_clean_cache' from command line to 'False'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'cmake_clean_first' from command line to 'False'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'cmake_force_configure' from command line to 'False'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'meson_args' from command line to '[]'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'ament_cmake_args' from command line to 'None'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'catkin_cmake_args' from command line to 'None'
+[0.613s] Level 5:colcon.colcon_core.verb:set package 'mbot_localization' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.613s] DEBUG:colcon.colcon_core.verb:Building package 'mbot_localization' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/mbot/mbot_ros_labs/src/build/mbot_localization', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/mbot/mbot_ros_labs/src/install/mbot_localization', 'merge_install': False, 'meson_args': [], 'path': '/home/mbot/mbot_ros_labs/src/mbot_localization', 'symlink_install': False, 'test_result_base': None}
+[0.613s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.615s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.615s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/mbot/mbot_ros_labs/src/mbot_localization' with build type 'ament_cmake'
+[0.616s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/mbot/mbot_ros_labs/src/mbot_localization'
+[0.618s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.618s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.619s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.633s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/mbot/mbot_ros_labs/src/mbot_localization -DCMAKE_INSTALL_PREFIX=/home/mbot/mbot_ros_labs/src/install/mbot_localization
+[5.296s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/mbot/mbot_ros_labs/src/mbot_localization -DCMAKE_INSTALL_PREFIX=/home/mbot/mbot_ros_labs/src/install/mbot_localization
+[5.298s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_localization -- -j4 -l4
+[37.540s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_localization -- -j4 -l4
+[37.561s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_localization
+[37.617s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(mbot_localization)
+[37.618s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_localization
+[37.623s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization' for CMake module files
+[37.624s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization' for CMake config files
+[37.625s] Level 1:colcon.colcon_core.shell:create_environment_hook('mbot_localization', 'cmake_prefix_path')
+[37.625s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/hook/cmake_prefix_path.ps1'
+[37.627s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/hook/cmake_prefix_path.dsv'
+[37.628s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/hook/cmake_prefix_path.sh'
+[37.629s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib'
+[37.630s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/bin'
+[37.630s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/pkgconfig/mbot_localization.pc'
+[37.630s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/python3.12/site-packages'
+[37.631s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/bin'
+[37.631s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.ps1'
+[37.632s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.dsv'
+[37.633s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.sh'
+[37.634s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.bash'
+[37.635s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.zsh'
+[37.636s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/colcon-core/packages/mbot_localization)
+[37.637s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(mbot_localization)
+[37.637s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization' for CMake module files
+[37.638s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization' for CMake config files
+[37.638s] Level 1:colcon.colcon_core.shell:create_environment_hook('mbot_localization', 'cmake_prefix_path')
+[37.639s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/hook/cmake_prefix_path.ps1'
+[37.640s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/hook/cmake_prefix_path.dsv'
+[37.640s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/hook/cmake_prefix_path.sh'
+[37.642s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib'
+[37.642s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/bin'
+[37.642s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/pkgconfig/mbot_localization.pc'
+[37.642s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/python3.12/site-packages'
+[37.643s] Level 1:colcon.colcon_core.environment:checking '/home/mbot/mbot_ros_labs/src/install/mbot_localization/bin'
+[37.643s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.ps1'
+[37.644s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.dsv'
+[37.646s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.sh'
+[37.647s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.bash'
+[37.648s] INFO:colcon.colcon_core.shell:Creating package script '/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.zsh'
+[37.649s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/colcon-core/packages/mbot_localization)
+[37.650s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[37.651s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[37.652s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[37.652s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[37.663s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[37.663s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[37.664s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[37.709s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[37.710s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mbot/mbot_ros_labs/src/install/local_setup.ps1'
+[37.711s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mbot/mbot_ros_labs/src/install/_local_setup_util_ps1.py'
+[37.714s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mbot/mbot_ros_labs/src/install/setup.ps1'
+[37.717s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mbot/mbot_ros_labs/src/install/local_setup.sh'
+[37.718s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mbot/mbot_ros_labs/src/install/_local_setup_util_sh.py'
+[37.722s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mbot/mbot_ros_labs/src/install/setup.sh'
+[37.725s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mbot/mbot_ros_labs/src/install/local_setup.bash'
+[37.725s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mbot/mbot_ros_labs/src/install/setup.bash'
+[37.729s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mbot/mbot_ros_labs/src/install/local_setup.zsh'
+[37.730s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mbot/mbot_ros_labs/src/install/setup.zsh'

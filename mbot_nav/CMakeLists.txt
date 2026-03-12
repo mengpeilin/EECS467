@@ -12,6 +12,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(mbot_interfaces REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 include_directories(include)
 
@@ -53,13 +54,33 @@ ament_target_dependencies(exploration_node
   tf2_ros
   tf2_geometry_msgs
   mbot_interfaces
+  visualization_msgs
 )
 target_link_libraries(exploration_node
   obstacle_distance_grid
 )
 
+# Fast Exploration node (for maze speed challenge)
+add_executable(fast_exploration_node
+  src/fast_exploration_node.cpp
+  src/astar.cpp
+  src/frontier_explorer.cpp
+)
+ament_target_dependencies(fast_exploration_node
+  rclcpp
+  nav_msgs
+  geometry_msgs
+  tf2_ros
+  tf2_geometry_msgs
+  mbot_interfaces
+  visualization_msgs
+)
+target_link_libraries(fast_exploration_node
+  obstacle_distance_grid
+)
+
 # Install targets and resources
-install(TARGETS navigation_node exploration_node
+install(TARGETS navigation_node exploration_node fast_exploration_node
   DESTINATION lib/${PROJECT_NAME}
 )
 install(TARGETS obstacle_distance_grid

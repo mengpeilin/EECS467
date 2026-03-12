@@ -1,11 +1,12 @@
 #include "action_model.hpp"
-#include "localization_utils.hpp"
+#include "slam_utils.hpp"
 
 #include <random>
 #include <utility>
 #include <cmath>
+#include <rclcpp/rclcpp.hpp>
 
-using namespace mbot_localization;
+using namespace mbot_slam;
 
 ActionModel::ActionModel()
 {
@@ -16,6 +17,8 @@ ActionModel::ActionModel()
 void ActionModel::setOdomReference(const nav_msgs::msg::Odometry& odom)
 {
     prev_odom_   = odom;
+    RCLCPP_INFO(rclcpp::get_logger("action_model"), "Initialized odometry reference.");
+
 }
 
 bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
@@ -31,11 +34,12 @@ bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
 
     // TODO #1: Compute the rotation-translation-rotation motion components
     //          Replace following 0s with the correct expressions
-    double delta_trans = 0;
-    double delta_theta = 0;
-    rot1_ = 0;
-    trans_ = 0;
-    rot2_ = 0;
+    const double delta_trans  = std::sqrt(dx*dx + dy*dy);
+    const double delta_theta  = angleDiff(theta_curr, theta_prev);
+
+    rot1_ = angleDiff(std::atan2(dy, dx), theta_prev);
+    trans_ = delta_trans;
+    rot2_ = angleDiff(delta_theta, rot1_);
 
     const bool moved =
         (delta_trans >= min_trans_) ||
@@ -44,9 +48,9 @@ bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
     if (moved) {
         // TODO #2: calcuate standard deviations (alpha-model)
         // Hint: use k1_ and k2_ member variables
-        rot1_std_  = 0;
-        trans_std_ = 0;
-        rot2_std_  = 0;
+        rot1_std_  = std::sqrt(k1_ * std::max(std::abs(rot1_), min_rot_));
+        trans_std_ = std::sqrt(k2_ * std::max(std::abs(trans_), min_trans_));
+        rot2_std_  = std::sqrt(k1_ * std::max(std::abs(rot2_), min_rot_));
     }
 
     prev_odom_ = odom;
@@ -56,23 +60,23 @@ bool ActionModel::processOdometry(const nav_msgs::msg::Odometry& odom)
 
 geometry_msgs::msg::Pose ActionModel::propagateParticle(const geometry_msgs::msg::Pose& pose)
 {
-    /// TODO #3: Sample noisy motion components
-    // Hint: use std::normal_distribution
-    // Hint: random_gen is available as a member variable
-    // e.g., std::normal_distribution<double> dist(mean, std_dev);
-    //       double sample = dist(random_gen);
-    //       where mean should be the odometry
-    // Replace 0s with the correct expressions
-    double sampled_rot1  = 0.0;
-    double sampled_trans = 0.0;
-    double sampled_rot2  = 0.0; 
+    // Sample noisy motion components
+    std::normal_distribution<double> n_rot1 (rot1_,  rot1_std_);
+    std::normal_distribution<double> n_trans(trans_, trans_std_);
+    std::normal_distribution<double> n_rot2 (rot2_,  rot2_std_);
 
-    // TODO #4: Update particle position and orientation based on sampled motion
-    // Replace 0s with the correct expressions
-    geometry_msgs::msg::Pose new_pose;
-    new_pose.position.x = 0;
-    new_pose.position.y = 0;
-    setOrientationFromYaw(new_pose, wrapToPi(0));
+    const double sr1   = n_rot1(random_gen);
+    const double st    = n_trans(random_gen);
+    const double sr2   = n_rot2(random_gen);
+
+    // Current heading of the particle
+    const double theta = yawFromQuaternion(pose.orientation);
+
+    // Propagate
+    geometry_msgs::msg::Pose new_pose = pose;
+    new_pose.position.x += st * std::cos(theta + sr1);
+    new_pose.position.y += st * std::sin(theta + sr1);
+    setOrientationFromYaw(new_pose, wrapToPi(theta + sr1 + sr2));
 
     return new_pose;
 

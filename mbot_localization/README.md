@@ -5,7 +5,7 @@ A 2D Monte Carlo Localization implementation.
 ## How to run
 **First** on NoMachine Terminal: 
 ```
-cd ~/mbot_ros_labs/src/mbot_localization/rviz
+cd ~/mbot_labs_ws/src/mbot_localization/rviz
 ros2 run rviz2 rviz2 -d localization.rviz
 ```
 **Second** on VSCode Terminal #1:
@@ -15,7 +15,7 @@ ros2 run mbot_localization localization_node
 
 **Last** on VSCode Terminal #2:
 ```bash
-cd ~/mbot_ros_labs/src/mbot_rosbags/maze1
+cd ~/mbot_labs_ws/src/mbot_rosbags/maze1
 ros2 bag play maze1.mcap
 ```
 ## Algorithm Details

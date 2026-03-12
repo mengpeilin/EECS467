@@ -7,6 +7,7 @@
 
 #include <cmath>
 #include <limits>
+#include <algorithm>
 
 namespace mbot_localization
 {
@@ -32,8 +33,8 @@ bool SensorModel::getDistanceAt(double world_x, double world_y, const ObstacleDi
 
     if (x0 < 0 || y0 < 0 || x1 >= grid_w || y1 >= grid_h) return false;
 
-   // TODO #1: Read and understand the following code. 
-   // Hint: Bilinear interpolation for distance?
+    // TODO #1: Read and understand the following code.
+    // Hint: Bilinear interpolation for distance?
     const float fx = static_cast<float>(gx - x0);
     const float fy = static_cast<float>(gy - y0);
     const float d00 = grid.getDistance(x0, y0);
@@ -47,9 +48,9 @@ bool SensorModel::getDistanceAt(double world_x, double world_y, const ObstacleDi
     return true;
 }
 
-double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
+double SensorModel::likelihood(const geometry_msgs::msg::Pose&     pose,
                                const sensor_msgs::msg::LaserScan& scan,
-                               const ObstacleDistanceGrid&         grid) const
+                               const ObstacleDistanceGrid&        grid) const
 {
     const double robot_x = pose.position.x;
     const double robot_y = pose.position.y;
@@ -57,9 +58,9 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
     const double inv_two_sigma2 = 1.0 / (2.0 * sigma_hit_ * sigma_hit_);
 
     // TODO #2: Compute uniform probability distribution over range
-        // Hint: p_uniform = 1.0 / (scan.range_max - scan.range_min)
-    const double range_span = scan.range_max - scan.range_min;
-    const double p_uniform = (range_span > 0.0) ? (1.0 / range_span) : 1e-9;
+    // Hint: p_uniform = 1.0 / (scan.range_max - scan.range_min)
+    const double denom = std::max(1e-9, static_cast<double>(scan.range_max - scan.range_min));
+    const double p_uniform = 1.0 / denom;
 
     double log_sum = 0.0;
     int used = 0;
@@ -82,21 +83,13 @@ double SensorModel::likelihood(const geometry_msgs::msg::Pose&    pose,
         if (!getDistanceAt(endpoint_x, endpoint_y, grid, distance_to_obstacle)) continue;
 
         // TODO #3: Compute sensor likelihood for this ray
-        // Hint: 
+        // Hint:
         //       Compute Gaussian p_hit = exp(-(d²) / (2σ²)) where σ = sigma_hit_
         //       Then mixture model p = Z_HIT * p_hit + Z_RAND * p_uniform
-        constexpr double Z_HIT  = 0.95;
-        constexpr double Z_RAND = 1.0 - Z_HIT;
         const double d = static_cast<double>(distance_to_obstacle);
         const double p_hit = std::exp(-(d * d) * inv_two_sigma2);
         double p = Z_HIT * p_hit + Z_RAND * p_uniform;
         p = std::max(p, 1e-12);
-
-
-
-
-
-
 
         log_sum += std::log(p);
         ++used;

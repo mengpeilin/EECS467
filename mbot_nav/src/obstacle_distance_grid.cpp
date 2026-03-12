@@ -38,33 +38,63 @@ int8_t ObstacleDistanceGrid::getOccupancy(int x, int y) const
 
 void ObstacleDistanceGrid::computeDistances()
 {
-    std::queue<GridCell> queue;
+    // Use multi-source Dijkstra to compute approximate Euclidean distance on 8-connected grid
+    struct PQNode {
+        int x;
+        int y;
+        float d;
+        bool operator>(const PQNode& other) const { return d > other.d; }
+    };
 
-    // TODO: Compute distances to nearest obstacle for each cell, then fill distances_ vector
-    // occupancy_ is 1D array representing 2D grid
-    // distances_ is also 1D array representing 2D grid
-    // later we will use dist_grid_ in sensor model to compare expected vs actual measurements
+    std::priority_queue<PQNode, std::vector<PQNode>, std::greater<PQNode>> pq;
 
-
-
-    // Step 1: Initialize queue with all occupied cells (value >= 50)
+    // Step 1: Initialize with all occupied cells (value >= 50)
     for (int y = 0; y < height_; ++y) {
         for (int x = 0; x < width_; ++x) {
-            int idx = y * width_ + x;
+            const int idx = y * width_ + x;
             if (occupancy_[idx] >= 50) {
                 distances_[idx] = 0.0f;
-                queue.emplace(x, y);
+                pq.push({x, y, 0.0f});
+            } else {
+                distances_[idx] = std::numeric_limits<float>::max();
             }
         }
     }
 
-    // Step 2: Flood-fill using 8-connected neighbors and Euclidean distance
+    // If no obstacle exists in the map, keep all distances as max
+    if (pq.empty()) return;
 
+    const int dx[8] = { 1, -1,  0,  0,  1,  1, -1, -1};
+    const int dy[8] = { 0,  0,  1, -1,  1, -1,  1, -1};
 
+    const float step_straight = resolution_;
+    const float step_diag = resolution_ * std::sqrt(2.0f);
 
+    // Step 2: Dijkstra relaxations over 8-connected neighbors
+    while (!pq.empty()) {
+        PQNode cur = pq.top();
+        pq.pop();
 
+        const int cur_idx = cur.y * width_ + cur.x;
 
+        // stale entry check
+        if (cur.d > distances_[cur_idx]) continue;
 
-    
+        for (int k = 0; k < 8; ++k) {
+            const int nx = cur.x + dx[k];
+            const int ny = cur.y + dy[k];
+            if (!isCellInGrid(nx, ny)) continue;
+
+            const int nidx = ny * width_ + nx;
+
+            const bool is_diag = (dx[k] != 0 && dy[k] != 0);
+            const float step = is_diag ? step_diag : step_straight;
+
+            const float nd = cur.d + step;
+            if (nd < distances_[nidx]) {
+                distances_[nidx] = nd;
+                pq.push({nx, ny, nd});
+            }
+        }
+    }
 }
-

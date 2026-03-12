@@ -1,0 +1,83 @@
+[0.024s] Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_slam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_slam -- -j4 -l4
+[0.331s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.754s] -- Found rclcpp: 28.1.10 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.834s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.854s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.882s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.911s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.050s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.056s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.217s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.360s] -- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[1.468s] -- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)
+[1.517s] -- Found nav2_msgs: 1.3.7 (/opt/ros/jazzy/share/nav2_msgs/cmake)
+[1.727s] -- Found tf2: 0.36.12 (/opt/ros/jazzy/share/tf2/cmake)
+[1.735s] -- Found tf2_ros: 0.36.12 (/opt/ros/jazzy/share/tf2_ros/cmake)
+[1.888s] -- Found tf2_geometry_msgs: 0.36.12 (/opt/ros/jazzy/share/tf2_geometry_msgs/cmake)
+[1.899s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[1.902s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[1.917s] -- Found ament_lint_auto: 0.17.2 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[2.111s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.111s] -- Configured cppcheck include dirs: /home/mbot/mbot_ros_labs/src/mbot_slam/include
+[2.111s] -- Configured cppcheck exclude dirs and/or files: 
+[2.114s] -- Added test 'lint_cmake' to check CMake code style
+[2.116s] -- Added test 'uncrustify' to check C / C++ code style
+[2.117s] -- Configured uncrustify additional arguments: 
+[2.119s] -- Added test 'xmllint' to check XML markup files
+[2.121s] -- Configuring done (1.8s)
+[2.189s] -- Generating done (0.0s)
+[2.211s] -- Build files have been written to: /home/mbot/mbot_ros_labs/src/build/mbot_slam
+[2.375s] [ 12%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/action_model.cpp.o[0m
+[2.375s] [ 25%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/sensor_model.cpp.o[0m
+[2.384s] [ 50%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/particle_filter.cpp.o[0m
+[2.384s] [ 50%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/mapping.cpp.o[0m
+[2.885s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:[m[K In member function ‘[01m[Kvoid mbot_slam::OccupancyGrid::[01;32m[KmarkCellOccupied[m[K(int, int)[m[K’:
+[2.885s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:19:25:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+[2.885s]    19 |     if (idx >= 0 && [01;35m[Kidx < data_.size()[m[K)
+[2.885s]       |                     [01;35m[K~~~~^~~~~~~~~~~~~~[m[K
+[2.885s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:[m[K In member function ‘[01m[Kvoid mbot_slam::OccupancyGrid::[01;32m[KmarkCellFree[m[K(int, int)[m[K’:
+[2.885s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/mapping.cpp:29:25:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+[2.886s]    29 |     if (idx >= 0 && [01;35m[Kidx < data_.size()[m[K)
+[2.886s]       |                     [01;35m[K~~~~^~~~~~~~~~~~~~[m[K
+[3.349s] [ 62%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/moving_laser_scan.cpp.o[0m
+[4.162s] [ 75%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/obstacle_distance_grid.cpp.o[0m
+[6.073s] [ 87%] [32mBuilding CXX object CMakeFiles/slam_node.dir/src/slam_node.cpp.o[0m
+[8.921s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/particle_filter.cpp:[m[K In member function ‘[01m[Kgeometry_msgs::msg::Pose mbot_slam::ParticleFilter::[01;32m[KcomputeBestEstimate[m[K(const nav2_msgs::msg::ParticleCloud&) const[m[K’:
+[8.925s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_slam/src/particle_filter.cpp:130:99:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kcloud[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[8.925s]   130 | geometry_msgs::msg::Pose ParticleFilter::computeBestEstimate([01;35m[Kconst nav2_msgs::msg::ParticleCloud& cloud[m[K) const
+[8.925s]       |                                                              [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K
+[27.508s] [100%] [32m[1mLinking CXX executable slam_node[0m
+[29.862s] [100%] Built target slam_node
+[29.906s] Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_slam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_slam -- -j4 -l4
+[29.929s] Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_slam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_slam
+[29.946s] -- Install configuration: ""
+[29.946s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include
+[29.946s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/sensor_model.hpp
+[29.946s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/slam_utils.hpp
+[29.947s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/action_model.hpp
+[29.947s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/obstacle_distance_grid.hpp
+[29.947s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/moving_laser_scan.hpp
+[29.947s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/mapping.hpp
+[29.947s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/include/particle_filter.hpp
+[29.947s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/rviz
+[29.948s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/rviz/slam.rviz
+[29.949s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/lib/mbot_slam/slam_node
+[29.968s] -- Set non-toolchain portion of runtime path of "/home/mbot/mbot_ros_labs/src/install/mbot_slam/lib/mbot_slam/slam_node" to ""
+[29.968s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam//maps
+[29.968s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam//maps/.placeholder
+[29.968s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/ament_index/resource_index/package_run_dependencies/mbot_slam
+[29.968s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/ament_index/resource_index/parent_prefix_path/mbot_slam
+[29.968s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/ament_prefix_path.sh
+[29.968s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/ament_prefix_path.dsv
+[29.969s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/path.sh
+[29.969s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/environment/path.dsv
+[29.969s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.bash
+[29.969s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.sh
+[29.969s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.zsh
+[29.969s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/local_setup.dsv
+[29.969s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/package.dsv
+[29.969s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/ament_index/resource_index/packages/mbot_slam
+[29.970s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/cmake/mbot_slamConfig.cmake
+[29.970s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/cmake/mbot_slamConfig-version.cmake
+[29.970s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_slam/share/mbot_slam/package.xml
+[29.973s] Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_slam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_slam

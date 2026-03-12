@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <tf2/utils.h>
 #include <cmath>
+#include <mutex>
 
 class SLAMNode final : public rclcpp::Node
 {
@@ -49,6 +50,10 @@ public:
         map_timer_ = create_wall_timer(std::chrono::milliseconds(500),
                                        std::bind(&SLAMNode::publishMap, this));
 
+        // Timer to continuously publish TF transform at 20Hz (critical for navigation)
+        tf_timer_ = create_wall_timer(std::chrono::milliseconds(50),
+                                      std::bind(&SLAMNode::publishTfTimer, this));
+
         // Subscriptions
         scan_sub_ = create_subscription<sensor_msgs::msg::LaserScan>(
             "/scan", 20,
@@ -75,9 +80,15 @@ private:
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_sub_;
 
     rclcpp::TimerBase::SharedPtr map_timer_;
+    rclcpp::TimerBase::SharedPtr tf_timer_;  // Timer for continuous TF publishing
 
     nav_msgs::msg::Path est_path_;
     nav_msgs::msg::Path odom_path_;
+
+    // Cached TF data for continuous publishing
+    std::mutex tf_mutex_;
+    tf2::Transform latest_tf_map_odom_;
+    bool has_tf_data_{false};
 
     bool has_initialized_{false};
 
@@ -317,7 +328,7 @@ private:
 
     void broadcastTf(const geometry_msgs::msg::Pose  &map_base,
                      const geometry_msgs::msg::Pose  &odom_base,
-                     const rclcpp::Time              &stamp) const
+                     const rclcpp::Time              &stamp)
     {
         tf2::Transform tf_map_base;
         tf2::fromMsg(map_base, tf_map_base);
@@ -327,11 +338,34 @@ private:
 
         const tf2::Transform tf_map_odom = tf_map_base * tf_odom_base.inverse();
 
+        // Cache the transform for continuous publishing
+        {
+            std::lock_guard<std::mutex> lock(tf_mutex_);
+            latest_tf_map_odom_ = tf_map_odom;
+            has_tf_data_ = true;
+        }
+
+        // Publish with current time (not scan time) to ensure TF is always fresh
         geometry_msgs::msg::TransformStamped out;
-        out.header.stamp    = stamp;
+        out.header.stamp    = this->now();
         out.header.frame_id = "map";
         out.child_frame_id  = "odom";
         out.transform       = tf2::toMsg(tf_map_odom);
+
+        tf_broadcaster_->sendTransform(out);
+    }
+
+    // Timer callback to continuously publish TF even between scans
+    void publishTfTimer()
+    {
+        std::lock_guard<std::mutex> lock(tf_mutex_);
+        if (!has_tf_data_) return;
+
+        geometry_msgs::msg::TransformStamped out;
+        out.header.stamp    = this->now();
+        out.header.frame_id = "map";
+        out.child_frame_id  = "odom";
+        out.transform       = tf2::toMsg(latest_tf_map_odom_);
 
         tf_broadcaster_->sendTransform(out);
     }

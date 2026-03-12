@@ -27,6 +27,11 @@ add_executable(motion_controller_diff src/motion_controller_diff.cpp)
 ament_target_dependencies(motion_controller_diff rclcpp geometry_msgs nav_msgs std_msgs mbot_interfaces tf2_ros tf2_geometry_msgs)
 install(TARGETS motion_controller_diff DESTINATION lib/${PROJECT_NAME})
 
+# --- motion_controller_fast ---
+add_executable(motion_controller_fast src/motion_controller_fast.cpp)
+ament_target_dependencies(motion_controller_fast rclcpp geometry_msgs nav_msgs std_msgs sensor_msgs mbot_interfaces tf2_ros tf2_geometry_msgs)
+install(TARGETS motion_controller_fast DESTINATION lib/${PROJECT_NAME})
+
 # --- square_publisher ---
 add_executable(square_publisher src/square_publisher.cpp)
 ament_target_dependencies(square_publisher rclcpp geometry_msgs std_msgs mbot_interfaces)

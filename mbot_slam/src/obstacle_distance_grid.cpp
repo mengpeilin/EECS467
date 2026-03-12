@@ -59,7 +59,28 @@ void ObstacleDistanceGrid::computeDistances()
     // Step 2 TODO: Flood-fill using 8-connected neighbors and Euclidean distance
     //  Compute the neighbors, loop through the queue, update neighbor nx, ny,  then queue.emplace(nx, ny)
     //  You are also encouraged to explore other approaches to finish the distance computation.
+    const int dx[8] = {1, -1, 0, 0,  1, 1, -1, -1};
+    const int dy[8] = {0, 0, 1, -1,  1, -1, 1, -1};
 
+    while (!queue.empty()) {
+        GridCell cell = queue.front();
+        queue.pop();
+        float known_dist = getDistance(cell.x, cell.y);
+
+        for (int i = 0; i < 8; ++i) {
+            int nx = cell.x + dx[i];
+            int ny = cell.y + dy[i];
+            if (!isCellInGrid(nx, ny)) continue;
+
+            int neighbor_idx = ny * width_ + nx;
+            float est_neighbor_dist = known_dist + std::hypot(dx[i], dy[i]) * resolution_;
+
+            if (est_neighbor_dist < distances_[neighbor_idx]) {
+                distances_[neighbor_idx] = est_neighbor_dist;
+                queue.emplace(nx, ny);
+            }
+        }
+    }
 
    
     

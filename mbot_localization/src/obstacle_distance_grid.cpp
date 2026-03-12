@@ -59,6 +59,41 @@ void ObstacleDistanceGrid::computeDistances()
     // Step 2 TODO: Flood-fill using 8-connected neighbors and Euclidean distance
     //  Compute the neighbors, loop through the queue, update neighbor nx, ny,  then queue.emplace(nx, ny)
     //  You are also encouraged to explore other approaches to finish the distance computation.
+    // Step 2: Flood-fill using 8-connected neighbors and Euclidean distance
+    // 8-connected neighbor offsets
+    const int dx[8] = { 1, -1,  0,  0,  1,  1, -1, -1 };
+    const int dy[8] = { 0,  0,  1, -1,  1, -1,  1, -1 };
+
+    while (!queue.empty()) {
+        const GridCell cur = queue.front();
+        queue.pop();
+
+        const int cx = cur.x;
+        const int cy = cur.y;
+        const int cidx = cy * width_ + cx;
+        const float cur_dist = distances_[cidx];
+
+        // Try to relax all 8 neighbors
+        for (int k = 0; k < 8; ++k) {
+            const int nx = cx + dx[k];
+            const int ny = cy + dy[k];
+            if (!isCellInGrid(nx, ny)) continue;
+
+            const int nidx = ny * width_ + nx;
+
+            // Step cost: straight = res, diagonal = res*sqrt(2)
+            const bool diagonal = (dx[k] != 0 && dy[k] != 0);
+            const float step = diagonal ? (resolution_ * std::sqrt(2.0f)) : resolution_;
+
+            const float new_dist = cur_dist + step;
+
+            // If we found a shorter path to obstacle, update and push
+            if (new_dist < distances_[nidx]) {
+                distances_[nidx] = new_dist;
+                queue.emplace(nx, ny);
+            }
+        }
+    }
 
 
    

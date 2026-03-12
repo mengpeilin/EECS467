@@ -31,10 +31,20 @@ add_executable(slam_node
 ament_target_dependencies(slam_node
   rclcpp sensor_msgs nav_msgs nav2_msgs geometry_msgs tf2 tf2_ros tf2_geometry_msgs)
 
+# fast_slam_node (optimized for speed challenge)
+add_executable(fast_slam_node
+  src/mapping.cpp
+  src/moving_laser_scan.cpp
+  src/obstacle_distance_grid.cpp
+  src/fast_slam_node.cpp
+)
+ament_target_dependencies(fast_slam_node
+  rclcpp sensor_msgs nav_msgs nav2_msgs geometry_msgs tf2 tf2_ros tf2_geometry_msgs)
+
 # Install
 install(DIRECTORY include/ DESTINATION include)
 install(DIRECTORY rviz/ DESTINATION share/${PROJECT_NAME}/rviz)
-install(TARGETS slam_node RUNTIME DESTINATION lib/${PROJECT_NAME})
+install(TARGETS slam_node fast_slam_node RUNTIME DESTINATION lib/${PROJECT_NAME})
 install(DIRECTORY maps
   DESTINATION share/${PROJECT_NAME}/
 )

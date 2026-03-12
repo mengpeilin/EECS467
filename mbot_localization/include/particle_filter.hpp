@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <random>
+#include <utility>
 
 namespace mbot_localization
 {
@@ -33,13 +34,19 @@ class ParticleFilter
 {
 public:
     // Configuration constants
-    static constexpr int NUM_PARTICLES = 800;
+    static constexpr int NUM_PARTICLES = 600;
     
     ParticleFilter();
 
     // Initialization
     // Place all particles exactly at 'pose'
     void initializeAtPose(const geometry_msgs::msg::Pose& pose);
+
+    // Global initialization: uniformly distribute particles across free space
+    void initializeGlobal(const nav_msgs::msg::OccupancyGrid& map);
+
+    // Compute spatial variance of particle positions (x_var + y_var)
+    double computeVariance() const;
 
     // Reset odometry baseline after global re-initialization
     void resetOdometry(const nav_msgs::msg::Odometry& odom)

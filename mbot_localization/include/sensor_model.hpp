@@ -21,7 +21,8 @@ namespace mbot_localization
 class SensorModel
 {
 public:
-    static constexpr double SIGMA_HIT = 0.1;
+    // static constexpr double SIGMA_HIT = 0.1;
+    static constexpr double SIGMA_HIT = 0.08;
     static constexpr int    RAY_STRIDE = 2;
     static constexpr double Z_HIT = 0.95;      // Weight for accurate measurements
     static constexpr double Z_RAND = 0.05;     // Weight for noise/outliers
