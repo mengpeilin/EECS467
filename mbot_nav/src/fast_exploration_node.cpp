@@ -22,6 +22,7 @@
 
 #include "frontier_explorer.hpp"
 #include "astar.hpp"
+#include "greedy_best_first.hpp"
 #include "obstacle_distance_grid.hpp"
 
 #include <memory>
@@ -138,25 +139,31 @@ private:
             if (dist <= goal_reached_threshold_) {
                 RCLCPP_INFO(this->get_logger(), "Goal reached, selecting next frontier");
                 current_goal_.reset();
+                no_frontier_count_ = 0;  // Reset counter when goal is reached successfully
             } else {
-                // Still navigating - replan with updated position
-                planPath();
+                // Still navigating - replan periodically (less frequently)
+                static int replan_counter = 0;
+                if (replan_counter++ >= 3) {  // Replan every 3rd cycle (less frequent)
+                    planPath();
+                    replan_counter = 0;
+                }
                 publishFrontierMarkers();
                 return;
             }
         }
 
-        // Find next frontier
+        // Try to find next frontier
         auto goal = frontier_explorer_.selectGoal(robot_pose, dist_grid_);
         publishFrontierMarkers();
 
         if (!goal) {
             no_frontier_count_++;
-            RCLCPP_WARN(this->get_logger(), "No frontier (%d/%d)", 
+            RCLCPP_WARN(this->get_logger(), "No frontier found (%d/%d) - waiting for more exploration", 
                         no_frontier_count_, no_frontier_threshold_);
 
             if (no_frontier_count_ >= no_frontier_threshold_) {
-                RCLCPP_INFO(this->get_logger(), "=== EXPLORATION DONE! Returning to origin ===");
+                RCLCPP_INFO(this->get_logger(), 
+                    "=== EXPLORATION DONE! Map fully explored. Returning to origin ===");
                 current_goal_ = origin_pose_;
                 is_returning_ = true;
                 no_frontier_count_ = 0;
@@ -165,10 +172,13 @@ private:
             return;
         }
 
+        // Found a new frontier - reset counter and navigate to it
         no_frontier_count_ = 0;
         current_goal_ = goal;
-        RCLCPP_INFO(this->get_logger(), "New frontier goal: (%.2f, %.2f)", 
-                    current_goal_->x, current_goal_->y);
+        RCLCPP_INFO(this->get_logger(), "New frontier goal at (%.2f, %.2f), distance: %.2f m", 
+                    current_goal_->x, current_goal_->y,
+                    std::sqrt(std::pow(robot_pose.x - current_goal_->x, 2) +
+                             std::pow(robot_pose.y - current_goal_->y, 2)));
         planPath();
     }
 
@@ -180,7 +190,7 @@ private:
         if (!getRobotPose(robot_pose)) return;
 
         mbot_interfaces::msg::Pose2DArray path;
-        bool success = astar_planner_.planPath(dist_grid_, robot_pose, current_goal_.value(), path);
+        bool success = greedy_planner_.planPath(dist_grid_, robot_pose, current_goal_.value(), path);
 
         if (!success || path.poses.empty()) {
             RCLCPP_WARN(this->get_logger(), "Path planning failed!");
@@ -341,7 +351,8 @@ private:
     double goal_reached_threshold_ = 0.25;
 
     // Planners
-    mbot_nav::AStarPlanner astar_planner_;
+    // mbot_nav::AStarPlanner astar_planner_;
+    mbot_nav::GreedyBestFirstPlanner greedy_planner_;
     mbot_nav::FrontierExplorer frontier_explorer_;
     ObstacleDistanceGrid dist_grid_;
 

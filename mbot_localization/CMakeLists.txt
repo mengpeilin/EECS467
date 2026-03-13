@@ -15,6 +15,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 
 include_directories(include)
 
@@ -38,13 +39,21 @@ add_executable(global_localization_node
   src/obstacle_distance_grid.cpp
 )
 ament_target_dependencies(global_localization_node
-  rclcpp sensor_msgs nav_msgs nav2_msgs geometry_msgs tf2 tf2_ros tf2_geometry_msgs)
+  rclcpp sensor_msgs nav_msgs nav2_msgs geometry_msgs tf2 tf2_ros tf2_geometry_msgs std_msgs)
+
+# pose_listener_node
+add_executable(localization_pose_listener
+  src/pose_listener_node.cpp
+)
+ament_target_dependencies(localization_pose_listener
+  rclcpp sensor_msgs geometry_msgs std_msgs)
 
 # Install
 install(DIRECTORY include/ DESTINATION include)
 install(DIRECTORY rviz/ DESTINATION share/${PROJECT_NAME}/rviz)
 install(DIRECTORY launch/ DESTINATION share/${PROJECT_NAME}/launch)
-install(TARGETS localization_node global_localization_node RUNTIME DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY scripts/ DESTINATION lib/${PROJECT_NAME})
+install(TARGETS localization_node global_localization_node localization_pose_listener RUNTIME DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

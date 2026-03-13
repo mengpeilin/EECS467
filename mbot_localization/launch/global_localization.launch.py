@@ -23,6 +23,18 @@ def generate_launch_description():
         description='Particle variance threshold for localization success'
     )
 
+    robot_namespace_arg = DeclareLaunchArgument(
+        'robot_namespace',
+        default_value='robot1',
+        description='Robot namespace for pose publishing'
+    )
+
+    publish_pose_arg = DeclareLaunchArgument(
+        'publish_localized_pose',
+        default_value='true',
+        description='Whether to publish localized pose to other robots'
+    )
+
     map_file_path = PathJoinSubstitution([
         FindPackageShare(LaunchConfiguration('map_package')),
         'maps',
@@ -55,6 +67,8 @@ def generate_launch_description():
             'forward_speed': 0.1,
             'rotation_speed': 0.5,
             'obstacle_distance': 0.35,
+            'robot_namespace': LaunchConfiguration('robot_namespace'),
+            'publish_localized_pose': LaunchConfiguration('publish_localized_pose'),
         }]
     )
 
@@ -62,6 +76,8 @@ def generate_launch_description():
         map_name_arg,
         map_package_arg,
         variance_threshold_arg,
+        robot_namespace_arg,
+        publish_pose_arg,
         map_server,
         lifecycle_manager,
         global_localization_node,

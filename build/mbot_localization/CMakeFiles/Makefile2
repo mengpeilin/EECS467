@@ -64,6 +64,8 @@ CMAKE_BINARY_DIR = /home/mbot/mbot_ros_labs/src/build/mbot_localization
 
 # The main recursive "all" target.
 all: CMakeFiles/localization_node.dir/all
+all: CMakeFiles/global_localization_node.dir/all
+all: CMakeFiles/localization_pose_listener.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -74,6 +76,8 @@ preinstall:
 clean: CMakeFiles/uninstall.dir/clean
 clean: CMakeFiles/mbot_localization_uninstall.dir/clean
 clean: CMakeFiles/localization_node.dir/clean
+clean: CMakeFiles/global_localization_node.dir/clean
+clean: CMakeFiles/localization_pose_listener.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -135,7 +139,7 @@ CMakeFiles/mbot_localization_uninstall.dir/clean:
 CMakeFiles/localization_node.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target localization_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles --progress-num=7,8,9,10,11,12 "Built target localization_node"
 .PHONY : CMakeFiles/localization_node.dir/all
 
 # Build rule for subdir invocation for target.
@@ -153,6 +157,58 @@ localization_node: CMakeFiles/localization_node.dir/rule
 CMakeFiles/localization_node.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/clean
 .PHONY : CMakeFiles/localization_node.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/global_localization_node.dir
+
+# All Build rule for target.
+CMakeFiles/global_localization_node.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target global_localization_node"
+.PHONY : CMakeFiles/global_localization_node.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/global_localization_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/global_localization_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles 0
+.PHONY : CMakeFiles/global_localization_node.dir/rule
+
+# Convenience name for target.
+global_localization_node: CMakeFiles/global_localization_node.dir/rule
+.PHONY : global_localization_node
+
+# clean rule for target.
+CMakeFiles/global_localization_node.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/clean
+.PHONY : CMakeFiles/global_localization_node.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/localization_pose_listener.dir
+
+# All Build rule for target.
+CMakeFiles/localization_pose_listener.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_pose_listener.dir/build.make CMakeFiles/localization_pose_listener.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_pose_listener.dir/build.make CMakeFiles/localization_pose_listener.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles --progress-num=13,14 "Built target localization_pose_listener"
+.PHONY : CMakeFiles/localization_pose_listener.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/localization_pose_listener.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/localization_pose_listener.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles 0
+.PHONY : CMakeFiles/localization_pose_listener.dir/rule
+
+# Convenience name for target.
+localization_pose_listener: CMakeFiles/localization_pose_listener.dir/rule
+.PHONY : localization_pose_listener
+
+# clean rule for target.
+CMakeFiles/localization_pose_listener.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_pose_listener.dir/build.make CMakeFiles/localization_pose_listener.dir/clean
+.PHONY : CMakeFiles/localization_pose_listener.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

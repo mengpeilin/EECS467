@@ -46,6 +46,7 @@ add_executable(exploration_node
   src/exploration_node.cpp
   src/astar.cpp
   src/frontier_explorer.cpp
+  src/greedy_best_first.cpp
 )
 ament_target_dependencies(exploration_node
   rclcpp
@@ -65,6 +66,7 @@ add_executable(fast_exploration_node
   src/fast_exploration_node.cpp
   src/astar.cpp
   src/frontier_explorer.cpp
+  src/greedy_best_first.cpp
 )
 ament_target_dependencies(fast_exploration_node
   rclcpp

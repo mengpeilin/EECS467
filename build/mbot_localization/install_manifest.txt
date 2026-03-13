@@ -4,7 +4,12 @@
 /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/localization_utils.hpp
 /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/particle_filter.hpp
 /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/rviz/localization.rviz
+/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/dungeon_escape.launch.py
+/home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/global_localization.launch.py
+/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/pose_listener_node.py
 /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_node
+/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/global_localization_node
+/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_pose_listener
 /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/package_run_dependencies/mbot_localization
 /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/parent_prefix_path/mbot_localization
 /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/ament_prefix_path.sh

@@ -1,0 +1,91 @@
+[0.027s] Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_localization -- -j4 -l4
+[0.114s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.547s] -- Found rclcpp: 28.1.10 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.611s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.629s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.655s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.680s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.775s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.778s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.901s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.001s] -- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[1.082s] -- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)
+[1.121s] -- Found nav2_msgs: 1.3.7 (/opt/ros/jazzy/share/nav2_msgs/cmake)
+[1.331s] -- Found tf2: 0.36.12 (/opt/ros/jazzy/share/tf2/cmake)
+[1.341s] -- Found tf2_ros: 0.36.12 (/opt/ros/jazzy/share/tf2_ros/cmake)
+[1.511s] -- Found tf2_geometry_msgs: 0.36.12 (/opt/ros/jazzy/share/tf2_geometry_msgs/cmake)
+[1.530s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[1.534s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[1.560s] -- Found ament_lint_auto: 0.17.2 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[1.776s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.777s] -- Configured cppcheck include dirs: /home/mbot/mbot_ros_labs/src/mbot_localization/include
+[1.777s] -- Configured cppcheck exclude dirs and/or files: 
+[1.778s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.779s] -- Configured 'flake8' exclude dirs and/or files: 
+[1.783s] -- Added test 'lint_cmake' to check CMake code style
+[1.787s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.791s] -- Added test 'uncrustify' to check C / C++ code style
+[1.791s] -- Configured uncrustify additional arguments: 
+[1.792s] -- Added test 'xmllint' to check XML markup files
+[1.797s] -- Configuring done (1.7s)
+[1.871s] -- Generating done (0.1s)
+[1.895s] -- Build files have been written to: /home/mbot/mbot_ros_labs/src/build/mbot_localization
+[1.994s] [  7%] [32mBuilding CXX object CMakeFiles/localization_pose_listener.dir/src/pose_listener_node.cpp.o[0m
+[1.994s] [ 14%] [32mBuilding CXX object CMakeFiles/global_localization_node.dir/src/sensor_model.cpp.o[0m
+[1.997s] [ 21%] [32mBuilding CXX object CMakeFiles/global_localization_node.dir/src/action_model.cpp.o[0m
+[2.054s] [ 28%] [32mBuilding CXX object CMakeFiles/localization_node.dir/src/action_model.cpp.o[0m
+[4.618s] [ 35%] [32mBuilding CXX object CMakeFiles/global_localization_node.dir/src/particle_filter.cpp.o[0m
+[4.663s] [ 42%] [32mBuilding CXX object CMakeFiles/localization_node.dir/src/sensor_model.cpp.o[0m
+[4.760s] [ 50%] [32mBuilding CXX object CMakeFiles/global_localization_node.dir/src/global_localization_node.cpp.o[0m
+[7.161s] [ 57%] [32mBuilding CXX object CMakeFiles/localization_node.dir/src/particle_filter.cpp.o[0m
+[7.644s] [ 64%] [32mBuilding CXX object CMakeFiles/global_localization_node.dir/src/obstacle_distance_grid.cpp.o[0m
+[9.149s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_localization/src/pose_listener_node.cpp:[m[K In member function ‘[01m[Kvoid LocalizedPoseListener::[01;32m[Kexecute_mission_logic[m[K(const std::string&, double, double, double)[m[K’:
+[9.156s] [01m[K/home/mbot/mbot_ros_labs/src/mbot_localization/src/pose_listener_node.cpp:94:90:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kyaw[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[9.157s]    94 |     void execute_mission_logic(const std::string& robot_name, double x, double y, [01;35m[Kdouble yaw[m[K)
+[9.157s]       |                                                                                   [01;35m[K~~~~~~~^~~[m[K
+[10.438s] [ 71%] [32mBuilding CXX object CMakeFiles/localization_node.dir/src/localization_node.cpp.o[0m
+[10.575s] [ 78%] [32mBuilding CXX object CMakeFiles/localization_node.dir/src/obstacle_distance_grid.cpp.o[0m
+[30.507s] [ 85%] [32m[1mLinking CXX executable localization_pose_listener[0m
+[32.278s] [ 85%] Built target localization_pose_listener
+[43.346s] [ 92%] [32m[1mLinking CXX executable global_localization_node[0m
+[46.619s] [ 92%] Built target global_localization_node
+[49.140s] [100%] [32m[1mLinking CXX executable localization_node[0m
+[51.412s] [100%] Built target localization_node
+[51.469s] Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_localization -- -j4 -l4
+[51.507s] Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_localization
+[51.578s] -- Install configuration: ""
+[51.583s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include
+[51.583s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/sensor_model.hpp
+[51.588s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/action_model.hpp
+[51.588s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/obstacle_distance_grid.hpp
+[51.589s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/localization_utils.hpp
+[51.589s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/particle_filter.hpp
+[51.590s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/rviz
+[51.590s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/rviz/localization.rviz
+[51.590s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch
+[51.591s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/dungeon_escape.launch.py
+[51.594s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/global_localization.launch.py
+[51.596s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization
+[51.598s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/pose_listener_node.py
+[51.604s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_node
+[51.637s] -- Set non-toolchain portion of runtime path of "/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_node" to ""
+[51.637s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/global_localization_node
+[51.663s] -- Set non-toolchain portion of runtime path of "/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/global_localization_node" to ""
+[51.664s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_pose_listener
+[51.678s] -- Set non-toolchain portion of runtime path of "/home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_pose_listener" to ""
+[51.679s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/package_run_dependencies/mbot_localization
+[51.680s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/parent_prefix_path/mbot_localization
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/ament_prefix_path.sh
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/ament_prefix_path.dsv
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/path.sh
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/path.dsv
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.bash
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.sh
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.zsh
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.dsv
+[51.681s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.dsv
+[51.681s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/packages/mbot_localization
+[51.682s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/cmake/mbot_localizationConfig.cmake
+[51.682s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/cmake/mbot_localizationConfig-version.cmake
+[51.682s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.xml
+[51.686s] Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_localization

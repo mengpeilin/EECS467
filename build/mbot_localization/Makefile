@@ -210,12 +210,39 @@ localization_node/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/build
 .PHONY : localization_node/fast
 
+#=============================================================================
+# Target rules for targets named global_localization_node
+
+# Build rule for target.
+global_localization_node: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 global_localization_node
+.PHONY : global_localization_node
+
+# fast build rule for target.
+global_localization_node/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/build
+.PHONY : global_localization_node/fast
+
+#=============================================================================
+# Target rules for targets named localization_pose_listener
+
+# Build rule for target.
+localization_pose_listener: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 localization_pose_listener
+.PHONY : localization_pose_listener
+
+# fast build rule for target.
+localization_pose_listener/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_pose_listener.dir/build.make CMakeFiles/localization_pose_listener.dir/build
+.PHONY : localization_pose_listener/fast
+
 src/action_model.o: src/action_model.cpp.o
 .PHONY : src/action_model.o
 
 # target to build an object file
 src/action_model.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/action_model.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/action_model.cpp.o
 .PHONY : src/action_model.cpp.o
 
 src/action_model.i: src/action_model.cpp.i
@@ -224,6 +251,7 @@ src/action_model.i: src/action_model.cpp.i
 # target to preprocess a source file
 src/action_model.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/action_model.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/action_model.cpp.i
 .PHONY : src/action_model.cpp.i
 
 src/action_model.s: src/action_model.cpp.s
@@ -232,7 +260,32 @@ src/action_model.s: src/action_model.cpp.s
 # target to generate assembly for a file
 src/action_model.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/action_model.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/action_model.cpp.s
 .PHONY : src/action_model.cpp.s
+
+src/global_localization_node.o: src/global_localization_node.cpp.o
+.PHONY : src/global_localization_node.o
+
+# target to build an object file
+src/global_localization_node.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/global_localization_node.cpp.o
+.PHONY : src/global_localization_node.cpp.o
+
+src/global_localization_node.i: src/global_localization_node.cpp.i
+.PHONY : src/global_localization_node.i
+
+# target to preprocess a source file
+src/global_localization_node.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/global_localization_node.cpp.i
+.PHONY : src/global_localization_node.cpp.i
+
+src/global_localization_node.s: src/global_localization_node.cpp.s
+.PHONY : src/global_localization_node.s
+
+# target to generate assembly for a file
+src/global_localization_node.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/global_localization_node.cpp.s
+.PHONY : src/global_localization_node.cpp.s
 
 src/localization_node.o: src/localization_node.cpp.o
 .PHONY : src/localization_node.o
@@ -264,6 +317,7 @@ src/obstacle_distance_grid.o: src/obstacle_distance_grid.cpp.o
 # target to build an object file
 src/obstacle_distance_grid.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/obstacle_distance_grid.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/obstacle_distance_grid.cpp.o
 .PHONY : src/obstacle_distance_grid.cpp.o
 
 src/obstacle_distance_grid.i: src/obstacle_distance_grid.cpp.i
@@ -272,6 +326,7 @@ src/obstacle_distance_grid.i: src/obstacle_distance_grid.cpp.i
 # target to preprocess a source file
 src/obstacle_distance_grid.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/obstacle_distance_grid.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/obstacle_distance_grid.cpp.i
 .PHONY : src/obstacle_distance_grid.cpp.i
 
 src/obstacle_distance_grid.s: src/obstacle_distance_grid.cpp.s
@@ -280,6 +335,7 @@ src/obstacle_distance_grid.s: src/obstacle_distance_grid.cpp.s
 # target to generate assembly for a file
 src/obstacle_distance_grid.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/obstacle_distance_grid.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/obstacle_distance_grid.cpp.s
 .PHONY : src/obstacle_distance_grid.cpp.s
 
 src/particle_filter.o: src/particle_filter.cpp.o
@@ -288,6 +344,7 @@ src/particle_filter.o: src/particle_filter.cpp.o
 # target to build an object file
 src/particle_filter.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/particle_filter.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/particle_filter.cpp.o
 .PHONY : src/particle_filter.cpp.o
 
 src/particle_filter.i: src/particle_filter.cpp.i
@@ -296,6 +353,7 @@ src/particle_filter.i: src/particle_filter.cpp.i
 # target to preprocess a source file
 src/particle_filter.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/particle_filter.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/particle_filter.cpp.i
 .PHONY : src/particle_filter.cpp.i
 
 src/particle_filter.s: src/particle_filter.cpp.s
@@ -304,7 +362,32 @@ src/particle_filter.s: src/particle_filter.cpp.s
 # target to generate assembly for a file
 src/particle_filter.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/particle_filter.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/particle_filter.cpp.s
 .PHONY : src/particle_filter.cpp.s
+
+src/pose_listener_node.o: src/pose_listener_node.cpp.o
+.PHONY : src/pose_listener_node.o
+
+# target to build an object file
+src/pose_listener_node.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_pose_listener.dir/build.make CMakeFiles/localization_pose_listener.dir/src/pose_listener_node.cpp.o
+.PHONY : src/pose_listener_node.cpp.o
+
+src/pose_listener_node.i: src/pose_listener_node.cpp.i
+.PHONY : src/pose_listener_node.i
+
+# target to preprocess a source file
+src/pose_listener_node.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_pose_listener.dir/build.make CMakeFiles/localization_pose_listener.dir/src/pose_listener_node.cpp.i
+.PHONY : src/pose_listener_node.cpp.i
+
+src/pose_listener_node.s: src/pose_listener_node.cpp.s
+.PHONY : src/pose_listener_node.s
+
+# target to generate assembly for a file
+src/pose_listener_node.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_pose_listener.dir/build.make CMakeFiles/localization_pose_listener.dir/src/pose_listener_node.cpp.s
+.PHONY : src/pose_listener_node.cpp.s
 
 src/sensor_model.o: src/sensor_model.cpp.o
 .PHONY : src/sensor_model.o
@@ -312,6 +395,7 @@ src/sensor_model.o: src/sensor_model.cpp.o
 # target to build an object file
 src/sensor_model.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/sensor_model.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/sensor_model.cpp.o
 .PHONY : src/sensor_model.cpp.o
 
 src/sensor_model.i: src/sensor_model.cpp.i
@@ -320,6 +404,7 @@ src/sensor_model.i: src/sensor_model.cpp.i
 # target to preprocess a source file
 src/sensor_model.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/sensor_model.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/sensor_model.cpp.i
 .PHONY : src/sensor_model.cpp.i
 
 src/sensor_model.s: src/sensor_model.cpp.s
@@ -328,6 +413,7 @@ src/sensor_model.s: src/sensor_model.cpp.s
 # target to generate assembly for a file
 src/sensor_model.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization_node.dir/build.make CMakeFiles/localization_node.dir/src/sensor_model.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/global_localization_node.dir/build.make CMakeFiles/global_localization_node.dir/src/sensor_model.cpp.s
 .PHONY : src/sensor_model.cpp.s
 
 # Help Target
@@ -345,10 +431,15 @@ help:
 	@echo "... test"
 	@echo "... mbot_localization_uninstall"
 	@echo "... uninstall"
+	@echo "... global_localization_node"
 	@echo "... localization_node"
+	@echo "... localization_pose_listener"
 	@echo "... src/action_model.o"
 	@echo "... src/action_model.i"
 	@echo "... src/action_model.s"
+	@echo "... src/global_localization_node.o"
+	@echo "... src/global_localization_node.i"
+	@echo "... src/global_localization_node.s"
 	@echo "... src/localization_node.o"
 	@echo "... src/localization_node.i"
 	@echo "... src/localization_node.s"
@@ -358,6 +449,9 @@ help:
 	@echo "... src/particle_filter.o"
 	@echo "... src/particle_filter.i"
 	@echo "... src/particle_filter.s"
+	@echo "... src/pose_listener_node.o"
+	@echo "... src/pose_listener_node.i"
+	@echo "... src/pose_listener_node.s"
 	@echo "... src/sensor_model.o"
 	@echo "... src/sensor_model.i"
 	@echo "... src/sensor_model.s"

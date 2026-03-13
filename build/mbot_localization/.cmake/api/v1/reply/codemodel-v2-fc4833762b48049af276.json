@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-57e19098ff53cb337456.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "mbot_localization",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "global_localization_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-global_localization_node-558b74697cc47e7857db.json",
+					"name" : "global_localization_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "localization_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-localization_node-77efe50c5f5ee98af156.json",
+					"name" : "localization_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "localization_pose_listener::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-localization_pose_listener-bc506ef64213dc679ef7.json",
+					"name" : "localization_pose_listener",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "mbot_localization_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-mbot_localization_uninstall-6836fe4d871bb571eeb4.json",
+					"name" : "mbot_localization_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-ba25b14672b467737d80.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/mbot/mbot_ros_labs/src/build/mbot_localization",
+		"source" : "/home/mbot/mbot_ros_labs/src/mbot_localization"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

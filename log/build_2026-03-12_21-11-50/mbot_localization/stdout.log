@@ -1,0 +1,35 @@
+[ 14%] Built target localization_pose_listener
+[ 57%] Built target global_localization_node
+[100%] Built target localization_node
+-- Install configuration: ""
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/sensor_model.hpp
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/action_model.hpp
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/obstacle_distance_grid.hpp
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/localization_utils.hpp
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/particle_filter.hpp
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/rviz
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/rviz/localization.rviz
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/dungeon_escape.launch.py
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/global_localization.launch.py
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/pose_listener_node.py
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_node
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/global_localization_node
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_pose_listener
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/package_run_dependencies/mbot_localization
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/parent_prefix_path/mbot_localization
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/ament_prefix_path.sh
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/path.sh
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/path.dsv
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.bash
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.sh
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.zsh
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.dsv
+-- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.dsv
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/packages/mbot_localization
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/cmake/mbot_localizationConfig.cmake
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/cmake/mbot_localizationConfig-version.cmake
+-- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.xml

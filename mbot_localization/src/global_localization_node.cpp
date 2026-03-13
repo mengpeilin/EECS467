@@ -19,6 +19,7 @@
 #include <nav_msgs/msg/path.hpp>
 #include <geometry_msgs/msg/pose_with_covariance_stamped.hpp>
 #include <geometry_msgs/msg/twist.hpp>
+#include <std_msgs/msg/string.hpp>
 
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/buffer.h>
@@ -45,11 +46,15 @@ public:
         this->declare_parameter("forward_speed", 0.1);
         this->declare_parameter("rotation_speed", 0.5);
         this->declare_parameter("obstacle_distance", 0.35);
+        this->declare_parameter("robot_namespace", "robot1");
+        this->declare_parameter("publish_localized_pose", true);
 
         variance_threshold_ = this->get_parameter("variance_threshold").as_double();
         forward_speed_      = this->get_parameter("forward_speed").as_double();
         rotation_speed_     = this->get_parameter("rotation_speed").as_double();
         obstacle_distance_  = this->get_parameter("obstacle_distance").as_double();
+        robot_namespace_    = this->get_parameter("robot_namespace").as_string();
+        publish_localized_pose_ = this->get_parameter("publish_localized_pose").as_bool();
 
         // Particle filter
         particle_filter_ = std::make_unique<mbot_localization::ParticleFilter>();
@@ -62,6 +67,9 @@ public:
         cloud_pub_ = create_publisher<sensor_msgs::msg::PointCloud2>("/particle_cloud", 10);
         est_path_pub_ = create_publisher<nav_msgs::msg::Path>("/estimated_path", 10);
         cmd_vel_pub_  = create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
+        // Publisher for sharing localized pose with other robots
+        localized_pose_pub_ = create_publisher<geometry_msgs::msg::PoseWithCovarianceStamped>("/localized_pose_" + robot_namespace_, 10);
+        localized_status_pub_ = create_publisher<std_msgs::msg::String>("/localization_status_" + robot_namespace_, 10);
 
         // Subscriptions
         map_sub_ = create_subscription<nav_msgs::msg::OccupancyGrid>(
@@ -82,6 +90,14 @@ public:
         RCLCPP_INFO(get_logger(),
             "  variance_threshold=%.4f, forward_speed=%.2f, rotation_speed=%.2f, obstacle_dist=%.2f",
             variance_threshold_, forward_speed_, rotation_speed_, obstacle_distance_);
+        RCLCPP_INFO(get_logger(),
+            "  robot_namespace=%s, publish_localized_pose=%s",
+            robot_namespace_.c_str(), publish_localized_pose_ ? "true" : "false");
+        if (publish_localized_pose_) {
+            RCLCPP_INFO(get_logger(),
+                "  Localized pose will be published to /localized_pose_%s",
+                robot_namespace_.c_str());
+        }
     }
 
 private:
@@ -98,6 +114,8 @@ private:
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr cloud_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr est_path_pub_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
+    rclcpp::Publisher<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr localized_pose_pub_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr localized_status_pub_;
 
     // Subscriptions
     rclcpp::Subscription<nav_msgs::msg::OccupancyGrid>::SharedPtr map_sub_;
@@ -122,6 +140,8 @@ private:
     double forward_speed_;
     double rotation_speed_;
     double obstacle_distance_;
+    std::string robot_namespace_;
+    bool publish_localized_pose_;
 
     // ────────────── Callbacks ──────────────
 
@@ -213,6 +233,11 @@ private:
                 // Stop the robot
                 geometry_msgs::msg::Twist stop;
                 cmd_vel_pub_->publish(stop);
+
+                // Publish localized pose for other robots
+                if (publish_localized_pose_) {
+                    publishLocalizedPose(est_pose, scan->header.stamp);
+                }
             } else {
                 RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 2000,
                     "Localizing... variance=%.6f (threshold=%.6f)",
@@ -329,6 +354,41 @@ private:
         est_path_.poses.push_back(pose_stamped);
 
         est_path_pub_->publish(est_path_);
+    }
+
+    void publishLocalizedPose(const geometry_msgs::msg::Pose& pose, const rclcpp::Time& stamp)
+    {
+        geometry_msgs::msg::PoseWithCovarianceStamped localized_msg;
+        localized_msg.header.stamp    = stamp;
+        localized_msg.header.frame_id = map_.header.frame_id;
+        localized_msg.pose.pose       = pose;
+        
+        // Set covariance - diagonal values indicating uncertainty
+        for (size_t i = 0; i < 36; i++) {
+            localized_msg.pose.covariance[i] = 0.0;
+        }
+        // Small position uncertainty
+        localized_msg.pose.covariance[0] = 0.01;  // x variance
+        localized_msg.pose.covariance[7] = 0.01;  // y variance
+        localized_msg.pose.covariance[14] = 0.01; // z variance
+        // Orientation uncertainty
+        localized_msg.pose.covariance[21] = 0.01; // roll variance
+        localized_msg.pose.covariance[28] = 0.01; // pitch variance
+        localized_msg.pose.covariance[35] = 0.01; // yaw variance
+
+        localized_pose_pub_->publish(localized_msg);
+
+        // Also publish status message
+        std_msgs::msg::String status_msg;
+        status_msg.data = "LOCALIZED:x=" + std::to_string(pose.position.x) + 
+                         ",y=" + std::to_string(pose.position.y) + 
+                         ",z=" + std::to_string(pose.position.z) +
+                         ",frame=" + map_.header.frame_id;
+        localized_status_pub_->publish(status_msg);
+
+        RCLCPP_INFO(get_logger(),
+            "[SHARED POSE] Publishing localized position to /localized_pose_%s: (%.3f, %.3f, %.3f)",
+            robot_namespace_.c_str(), pose.position.x, pose.position.y, pose.position.z);
     }
 
     void broadcastTf(const geometry_msgs::msg::Pose& map_base,

@@ -1,6 +1,8 @@
 /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/uninstall.dir
 /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/mbot_localization_uninstall.dir
 /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/localization_node.dir
+/home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/global_localization_node.dir
+/home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/localization_pose_listener.dir
 /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/test.dir
 /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/edit_cache.dir
 /home/mbot/mbot_ros_labs/src/build/mbot_localization/CMakeFiles/rebuild_cache.dir

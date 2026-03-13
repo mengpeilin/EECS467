@@ -1,0 +1,4 @@
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_localization/src/pose_listener_node.cpp:[m[K In member function ‘[01m[Kvoid LocalizedPoseListener::[01;32m[Kexecute_mission_logic[m[K(const std::string&, double, double, double)[m[K’:
+[01m[K/home/mbot/mbot_ros_labs/src/mbot_localization/src/pose_listener_node.cpp:94:90:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kyaw[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   94 |     void execute_mission_logic(const std::string& robot_name, double x, double y, [01;35m[Kdouble yaw[m[K)
+      |                                                                                   [01;35m[K~~~~~~~^~~[m[K

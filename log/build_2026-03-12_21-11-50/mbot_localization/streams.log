@@ -1,0 +1,39 @@
+[0.023s] Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_localization -- -j4 -l4
+[0.200s] [ 14%] Built target localization_pose_listener
+[0.207s] [ 57%] Built target global_localization_node
+[0.216s] [100%] Built target localization_node
+[0.239s] Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/mbot/mbot_ros_labs/src/build/mbot_localization -- -j4 -l4
+[0.260s] Invoking command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_localization
+[0.277s] -- Install configuration: ""
+[0.277s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include
+[0.277s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/sensor_model.hpp
+[0.277s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/action_model.hpp
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/obstacle_distance_grid.hpp
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/localization_utils.hpp
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/include/particle_filter.hpp
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/rviz
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/rviz/localization.rviz
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/dungeon_escape.launch.py
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/launch/global_localization.launch.py
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization
+[0.278s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/pose_listener_node.py
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_node
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/global_localization_node
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/lib/mbot_localization/localization_pose_listener
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/package_run_dependencies/mbot_localization
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/parent_prefix_path/mbot_localization
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/ament_prefix_path.sh
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/ament_prefix_path.dsv
+[0.279s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/path.sh
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/environment/path.dsv
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.bash
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.sh
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.zsh
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/local_setup.dsv
+[0.280s] -- Installing: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.dsv
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/ament_index/resource_index/packages/mbot_localization
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/cmake/mbot_localizationConfig.cmake
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/cmake/mbot_localizationConfig-version.cmake
+[0.280s] -- Up-to-date: /home/mbot/mbot_ros_labs/src/install/mbot_localization/share/mbot_localization/package.xml
+[0.283s] Invoked command in '/home/mbot/mbot_ros_labs/src/build/mbot_localization' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/mbot/mbot_ws/install/mbot_vision:/home/mbot/mbot_ws/install/mbot_bringup:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/mbot/mbot_ros_labs/src/build/mbot_localization

@@ -80,10 +80,10 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'goal_reached_threshold': 0.25,
-            'timer_period': 0.05,
-            'no_frontier_threshold': 15,
-            'min_frontier_distance': 0.15,
-            'goal_clearance': 0.08,
+            'timer_period': 0.2,  # Increased from 0.05 to reduce planning frequency
+            'no_frontier_threshold': 50,  # Increased from 15 to be more patient
+            'min_frontier_distance': 0.08,  # Reduced from 0.15 to allow closer frontiers
+            'goal_clearance': 0.08,  # Reduced from 0.08 to allow closer goals
         }]
     )
 
